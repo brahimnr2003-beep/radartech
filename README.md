@@ -3,8 +3,6 @@
 **Descubre los eventos tecnológicos más relevantes de España.**
 *Discover the most relevant tech events in Spain.*
 
-🔗 **Demo en vivo / Live demo:** https://brahimnr2003-beep.github.io/radartech/web/
-
 [Español](#español) · [English](#english)
 
 ---
@@ -22,9 +20,9 @@ Hoy esa información está dispersa entre webs de empresas, universidades, asoci
 | Área | Estado |
 |---|---|
 | Definición de producto | ✅ Completa ([`contexto/`](contexto/)) |
-| Diseño / boceto navegable | ✅ Terminado ([`web/index.html`](web/index.html)) |
-| Stack tecnológico | ⏳ Pendiente de decidir ([`decisiones.md`](contexto/decisiones.md)) |
-| Desarrollo | ⏳ Próxima fase |
+| Diseño / boceto navegable | ✅ Terminado ([`docs/boceto/index.html`](docs/boceto/index.html)) |
+| Stack tecnológico | ✅ Decidido ([`decisiones.md`](contexto/decisiones.md)) |
+| Desarrollo | 🚧 En curso |
 
 El boceto usa datos de ejemplo.
 
@@ -50,8 +48,9 @@ El boceto usa datos de ejemplo.
 ```
 radartech/
 ├── contexto/        # Documentación de producto, UX, negocio y registro de decisiones
-└── web/
-    └── index.html   # Boceto navegable
+├── docs/boceto/     # Boceto navegable (HTML/CSS/JS)
+├── public/          # Recursos estáticos
+└── src/app/         # Aplicación Next.js (App Router)
 ```
 
 ---
@@ -69,9 +68,9 @@ That information is currently scattered across company, university and community
 | Area | Status |
 |---|---|
 | Product definition | ✅ Done ([`contexto/`](contexto/), in Spanish) |
-| Design / clickable mockup | ✅ Done ([`web/index.html`](web/index.html)) |
-| Tech stack | ⏳ To be decided ([`decisiones.md`](contexto/decisiones.md)) |
-| Development | ⏳ Next phase |
+| Design / clickable mockup | ✅ Done ([`docs/boceto/index.html`](docs/boceto/index.html)) |
+| Tech stack | ✅ Decided ([`decisiones.md`](contexto/decisiones.md), in Spanish) |
+| Development | 🚧 In progress |
 
 The mockup uses sample data.
 
