@@ -2,11 +2,19 @@
 memoria/
 CLAUDE.md
 .claude/
+AGENTS.md
 
 # ===== Entorno / secretos =====
 .env
 .env.*
 !.env.example
+
+# ===== Next.js / Vercel =====
+/.next/
+/out/
+.vercel
+next-env.d.ts
+*.pem
 
 # ===== Node.js =====
 node_modules/
