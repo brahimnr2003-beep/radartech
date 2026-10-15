@@ -14,7 +14,8 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "RadarTech — Eventos tecnológicos de España",
-  description: "Descubre los eventos tecnológicos más relevantes de España a través de un mapa interactivo por comunidades autónomas.",
+  description:
+    "Descubre los eventos tecnológicos más relevantes de España a través de un mapa interactivo por comunidades autónomas.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -23,7 +24,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="es"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="flex min-h-full flex-col">{children}</body>
     </html>
   );
 }
