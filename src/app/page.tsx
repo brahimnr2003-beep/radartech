@@ -164,12 +164,21 @@ export default function Home() {
           />
           <ul className="grid grid-cols-2 gap-px overflow-hidden rounded-md border border-line bg-line min-[521px]:grid-cols-3 min-[901px]:grid-cols-6">
             {CATEGORIAS.map(({ slug, nombre, icono }) => (
-              <li
-                key={slug}
-                className="flex flex-col gap-3.5 bg-bg-1 px-[18px] py-[26px]"
-              >
-                <Icon name={icono} size={22} className="text-orange" />
-                <span className="text-[0.86rem] font-medium">{nombre}</span>
+              <li key={slug} className="flex">
+                <Link
+                  href={`/eventos?categoria=${slug}`}
+                  className="flex w-full flex-col gap-3.5 bg-bg-1 px-[18px] py-[26px] transition-colors duration-200 hover:bg-bg-2"
+                >
+                  <Icon name={icono} size={22} className="text-orange" />
+                  <span>
+                    <span className="block text-[0.86rem] font-medium">
+                      {nombre}
+                    </span>
+                    <small className="font-mono text-[0.7rem] text-text-faint">
+                      Explorar categoría
+                    </small>
+                  </span>
+                </Link>
               </li>
             ))}
           </ul>

@@ -8,6 +8,8 @@ España
 
 Mapa de comunidades autónomas (más Ceuta y Melilla).
 
+Además, la página /eventos reúne todos los eventos de España con filtros, incluido uno por comunidad.
+
 Nivel 2
 
 Comunidad Autónoma

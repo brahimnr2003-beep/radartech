@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { Evento } from "./eventos";
-import { filtrarEventos, leerFiltros, opcionesLugar } from "./filtros";
+import { filtrarEventos, leerFiltros, opcionesUbicacion } from "./filtros";
 
 const evento = (datos: Partial<Evento>): Evento => ({
   slug: "evento",
@@ -77,6 +77,16 @@ describe("filtrarEventos", () => {
     ]);
   });
 
+  it("filtra por comunidad", () => {
+    const eventos = [
+      evento({ slug: "andalucia", comunidad: "andalucia" }),
+      evento({ slug: "madrid", comunidad: "madrid" }),
+    ];
+    expect(
+      slugs(filtrarEventos(eventos, { comunidad: "madrid" }, HOY)),
+    ).toEqual(["madrid"]);
+  });
+
   it("combina varios filtros a la vez", () => {
     const eventos = [
       evento({ slug: "ia-online", categoria: "ia", modalidad: "online" }),
@@ -135,25 +145,17 @@ describe("leerFiltros", () => {
   });
 });
 
-describe("opcionesLugar", () => {
-  const eventos = [
-    evento({ provincia: "Sevilla", ciudad: "Sevilla" }),
-    evento({ provincia: "Málaga", ciudad: "Marbella" }),
-    evento({ provincia: "Málaga", ciudad: "Málaga" }),
-    evento({ provincia: "Málaga", ciudad: "Málaga" }),
-  ];
-
-  it("devuelve provincias y ciudades sin repetir y en orden alfabético", () => {
-    expect(opcionesLugar(eventos)).toEqual({
-      provincias: ["Málaga", "Sevilla"],
-      ciudades: ["Málaga", "Marbella", "Sevilla"],
-    });
-  });
-
-  it("limita las ciudades a la provincia elegida", () => {
-    expect(opcionesLugar(eventos, "Málaga").ciudades).toEqual([
-      "Málaga",
-      "Marbella",
+describe("opcionesUbicacion", () => {
+  it("agrupa las ciudades por provincia, sin repetir y en orden alfabético", () => {
+    const eventos = [
+      evento({ provincia: "Sevilla", ciudad: "Sevilla" }),
+      evento({ provincia: "Málaga", ciudad: "Marbella" }),
+      evento({ provincia: "Málaga", ciudad: "Málaga" }),
+      evento({ provincia: "Málaga", ciudad: "Málaga" }),
+    ];
+    expect(opcionesUbicacion(eventos)).toEqual([
+      { provincia: "Málaga", ciudades: ["Málaga", "Marbella"] },
+      { provincia: "Sevilla", ciudades: ["Sevilla"] },
     ]);
   });
 });

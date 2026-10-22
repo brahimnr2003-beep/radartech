@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import {
-  EventosComunidad,
-  EventosComunidadInicial,
-} from "@/components/eventos-comunidad";
+  ListadoEventos,
+  ListadoEventosInicial,
+} from "@/components/listado-eventos";
 import { Migas } from "@/components/migas";
 import { COMUNIDADES } from "@/lib/comunidades";
 import { getEventosDeComunidad } from "@/lib/eventos";
@@ -76,8 +76,8 @@ export default async function PaginaComunidad({
         </div>
       </section>
       {/* Los filtros leen la URL en el navegador; mientras, se muestra el listado completo */}
-      <Suspense fallback={<EventosComunidadInicial eventos={eventos} />}>
-        <EventosComunidad eventos={eventos} />
+      <Suspense fallback={<ListadoEventosInicial eventos={eventos} />}>
+        <ListadoEventos eventos={eventos} />
       </Suspense>
     </>
   );

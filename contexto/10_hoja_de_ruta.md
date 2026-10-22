@@ -48,6 +48,8 @@ Las herramientas se incorporan en la fase que las necesita, no antes. El detalle
 ## 3. Página de comunidad y ficha de evento
 
 - Ruta `/eventos/[comunidad]` con eventos destacados primero, tarjetas y filtros.
+- Página `/eventos` con todos los eventos de España y filtro adicional de comunidad; las categorías de la portada enlazan a ella ya filtrada.
+- Filtro «Ubicación» que une provincia y ciudad (ciudades agrupadas por provincia).
 - Ficha de evento con todos sus datos y el enlace «Ver evento oficial».
 - Tests unitarios de la lógica de filtrado con **Vitest**.
 
@@ -58,6 +60,7 @@ Las herramientas se incorporan en la fase que las necesita, no antes. El detalle
 - PostgreSQL en **Docker** para desarrollo local.
 - Esquema y migraciones con **Drizzle**.
 - Las páginas leen los eventos de la base de datos.
+- Los eventos ya celebrados dejan de mostrarse.
 
 **Resultado:** los datos dejan de estar en el código.
 
@@ -97,7 +100,7 @@ Las herramientas se incorporan en la fase que las necesita, no antes. El detalle
 ## 9. Remate final
 
 - Tests de extremo a extremo con **Playwright**.
-- Revisión de la versión móvil y de la accesibilidad.
+- Revisión de la versión móvil y de la accesibilidad, con los filtros en un panel desplegable en móvil.
 - SEO: metadatos, sitemap y datos estructurados de eventos.
 - Páginas legales: privacidad, cookies y términos.
 - README final con captura y autoría.

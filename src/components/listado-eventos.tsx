@@ -2,6 +2,7 @@
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { CATEGORIAS } from "@/lib/categorias";
+import { COMUNIDADES } from "@/lib/comunidades";
 import { MODALIDADES, TIPOS_EVENTO, type Evento } from "@/lib/eventos";
 import {
   CLAVES_FILTRO,
@@ -9,24 +10,30 @@ import {
   PRECIOS,
   filtrarEventos,
   leerFiltros,
-  opcionesLugar,
+  opcionesUbicacion,
   type Filtros,
 } from "@/lib/filtros";
 import { TarjetaEvento } from "./tarjeta-evento";
 
+type Props = {
+  eventos: Evento[];
+  /** Muestra el filtro de comunidad (página de todos los eventos) */
+  conComunidad?: boolean;
+};
+
 /** Listado con filtros sincronizados con la URL (?categoria=ia&precio=gratuito…). */
-export function EventosComunidad({ eventos }: { eventos: Evento[] }) {
+export function ListadoEventos({ eventos, conComunidad }: Props) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const filtros = leerFiltros(searchParams);
 
-  const cambiar = (clave: keyof Filtros, valor: string) => {
+  const cambiar = (cambios: Partial<Record<keyof Filtros, string>>) => {
     const params = new URLSearchParams(searchParams);
-    if (valor) params.set(clave, valor);
-    else params.delete(clave);
-    // La ciudad depende de la provincia: al cambiar de provincia se reinicia
-    if (clave === "provincia") params.delete("ciudad");
+    for (const [clave, valor] of Object.entries(cambios)) {
+      if (valor) params.set(clave, valor);
+      else params.delete(clave);
+    }
     const query = params.toString();
     router.replace(query ? `${pathname}?${query}` : pathname, {
       scroll: false,
@@ -38,8 +45,9 @@ export function EventosComunidad({ eventos }: { eventos: Evento[] }) {
   return (
     <PanelEventos
       eventos={filtrarEventos(eventos, filtros, hoyISO())}
-      opciones={eventos}
+      todos={eventos}
       filtros={filtros}
+      conComunidad={conComunidad}
       onCambio={cambiar}
       onLimpiar={limpiar}
     />
@@ -47,12 +55,13 @@ export function EventosComunidad({ eventos }: { eventos: Evento[] }) {
 }
 
 /** Versión sin filtros activos, para el primer render en el servidor. */
-export function EventosComunidadInicial({ eventos }: { eventos: Evento[] }) {
+export function ListadoEventosInicial({ eventos, conComunidad }: Props) {
   return (
     <PanelEventos
       eventos={eventos}
-      opciones={eventos}
+      todos={eventos}
       filtros={{}}
+      conComunidad={conComunidad}
       onCambio={() => {}}
       onLimpiar={() => {}}
     />
@@ -66,20 +75,32 @@ function hoyISO(): string {
   return `${ahora.getFullYear()}-${mes}-${dia}`;
 }
 
+const estiloSelector = (activo: boolean) =>
+  `max-w-40 cursor-pointer appearance-none truncate rounded-full border bg-bg-1 px-4 py-[9px] font-mono text-[0.78rem] transition-colors hover:border-orange hover:text-text ${
+    activo ? "border-orange text-text" : "border-line-strong text-text-dim"
+  }`;
+
 function PanelEventos({
   eventos,
-  opciones,
+  todos,
   filtros,
+  conComunidad,
   onCambio,
   onLimpiar,
 }: {
   eventos: Evento[];
-  opciones: Evento[];
+  todos: Evento[];
   filtros: Filtros;
-  onCambio: (clave: keyof Filtros, valor: string) => void;
+  conComunidad?: boolean;
+  onCambio: (cambios: Partial<Record<keyof Filtros, string>>) => void;
   onLimpiar: () => void;
 }) {
-  const { provincias, ciudades } = opcionesLugar(opciones, filtros.provincia);
+  // La ubicación ofrece solo lugares de la comunidad elegida
+  const ubicaciones = opcionesUbicacion(
+    todos.filter(
+      (e) => !filtros.comunidad || e.comunidad === filtros.comunidad,
+    ),
+  );
   const destacados = eventos.filter((e) => e.destacado);
   const resto = eventos.filter((e) => !e.destacado);
   const hayFiltros = CLAVES_FILTRO.some((clave) => filtros[clave]);
@@ -89,17 +110,6 @@ function PanelEventos({
     etiqueta: string;
     opciones: [valor: string, texto: string][];
   }[] = [
-    { clave: "fecha", etiqueta: "Fecha", opciones: Object.entries(FECHAS) },
-    {
-      clave: "provincia",
-      etiqueta: "Provincia",
-      opciones: provincias.map((p) => [p, p]),
-    },
-    {
-      clave: "ciudad",
-      etiqueta: "Ciudad",
-      opciones: ciudades.map((c) => [c, c]),
-    },
     {
       clave: "categoria",
       etiqueta: "Categoría",
@@ -126,17 +136,58 @@ function PanelEventos({
           aria-label="Filtros"
           className="wrap flex flex-wrap items-center gap-2.5 py-6"
         >
+          <select
+            aria-label="Fecha"
+            value={filtros.fecha ?? ""}
+            onChange={(e) => onCambio({ fecha: e.target.value })}
+            className={estiloSelector(!!filtros.fecha)}
+          >
+            <option value="">Fecha</option>
+            {Object.entries(FECHAS).map(([valor, texto]) => (
+              <option key={valor} value={valor}>
+                {texto}
+              </option>
+            ))}
+          </select>
+
+          {conComunidad && (
+            <select
+              aria-label="Comunidad"
+              value={filtros.comunidad ?? ""}
+              // Al cambiar de comunidad, la ubicación anterior deja de tener sentido
+              onChange={(e) =>
+                onCambio({
+                  comunidad: e.target.value,
+                  provincia: "",
+                  ciudad: "",
+                })
+              }
+              className={estiloSelector(!!filtros.comunidad)}
+            >
+              <option value="">Comunidad</option>
+              {[...COMUNIDADES]
+                .sort((a, b) => a.nombre.localeCompare(b.nombre, "es"))
+                .map(({ slug, nombre }) => (
+                  <option key={slug} value={slug}>
+                    {nombre}
+                  </option>
+                ))}
+            </select>
+          )}
+
+          <SelectorUbicacion
+            ubicaciones={ubicaciones}
+            filtros={filtros}
+            onCambio={onCambio}
+          />
+
           {selectores.map(({ clave, etiqueta, opciones }) => (
             <select
               key={clave}
               aria-label={etiqueta}
               value={filtros[clave] ?? ""}
-              onChange={(e) => onCambio(clave, e.target.value)}
-              className={`cursor-pointer appearance-none rounded-full border bg-bg-1 px-4 py-[9px] font-mono text-[0.78rem] transition-colors hover:border-orange hover:text-text ${
-                filtros[clave]
-                  ? "border-orange text-text"
-                  : "border-line-strong text-text-dim"
-              }`}
+              onChange={(e) => onCambio({ [clave]: e.target.value })}
+              className={estiloSelector(!!filtros[clave])}
             >
               <option value="">{etiqueta}</option>
               {opciones.map(([valor, texto]) => (
@@ -146,6 +197,7 @@ function PanelEventos({
               ))}
             </select>
           ))}
+
           {hayFiltros && (
             <button
               type="button"
@@ -190,6 +242,63 @@ function PanelEventos({
         )}
       </div>
     </>
+  );
+}
+
+/**
+ * Provincia y ciudad en un solo desplegable. Con varias provincias, las ciudades
+ * se agrupan por provincia y cada grupo permite elegir la provincia entera.
+ */
+function SelectorUbicacion({
+  ubicaciones,
+  filtros,
+  onCambio,
+}: {
+  ubicaciones: { provincia: string; ciudades: string[] }[];
+  filtros: Filtros;
+  onCambio: (cambios: Partial<Record<keyof Filtros, string>>) => void;
+}) {
+  const valor = filtros.ciudad
+    ? `ciudad:${filtros.ciudad}`
+    : filtros.provincia
+      ? `provincia:${filtros.provincia}`
+      : "";
+
+  const elegir = (seleccion: string) => {
+    const [tipo, nombre = ""] = seleccion.split(/:(.*)/);
+    onCambio({
+      provincia: tipo === "provincia" ? nombre : "",
+      ciudad: tipo === "ciudad" ? nombre : "",
+    });
+  };
+
+  const ciudad = (nombre: string) => (
+    <option key={nombre} value={`ciudad:${nombre}`}>
+      {nombre}
+    </option>
+  );
+
+  return (
+    <select
+      aria-label="Ubicación"
+      value={valor}
+      onChange={(e) => elegir(e.target.value)}
+      className={estiloSelector(!!valor)}
+    >
+      <option value="">Ubicación</option>
+      {ubicaciones.length === 1
+        ? ubicaciones[0].ciudades.map(ciudad)
+        : ubicaciones.map(({ provincia, ciudades }) => (
+            <optgroup key={provincia} label={provincia}>
+              {ciudades.length > 1 && (
+                <option value={`provincia:${provincia}`}>
+                  Toda la provincia
+                </option>
+              )}
+              {ciudades.map(ciudad)}
+            </optgroup>
+          ))}
+    </select>
   );
 }
 

@@ -48,6 +48,10 @@ export const TIPOS_EVENTO: Record<TipoEvento, string> = {
 
 const porFecha = (a: Evento, b: Evento) => a.fecha.localeCompare(b.fecha);
 
+export function getEventos(): Evento[] {
+  return [...EVENTOS_EJEMPLO].sort(porFecha);
+}
+
 export function getEventosDeComunidad(comunidad: ComunidadSlug): Evento[] {
   return EVENTOS_EJEMPLO.filter((e) => e.comunidad === comunidad).sort(
     porFecha,
