@@ -48,21 +48,15 @@ Móvil:
 - Filtros mediante panel.
 - Header compacto.
 
-El footer sería algo como:
+El footer sigue el boceto (`docs/boceto/index.html`):
 
-LOGO
+- **Logo** y lema: «El radar del ecosistema tecnológico español.»
+- **Explorar:** Mapa · Categorías.
+- **Organizadores:** Añadir evento · Promociona tu evento.
+- **Proyecto:** Sobre nosotros · Contacto.
 
-Eventos
-Mapa
-Categorías
-Añadir evento
-Sobre nosotros
+Debajo de una línea divisoria:
 
-────────────────────
+© 2026 RadarTech · Privacidad · Cookies · Términos · Contacto
 
-© 2026 [Nombre]
-
-Privacidad
-Cookies
-Términos
-Contacto
+No hay enlace «Eventos»: llevaría al mismo sitio que «Mapa», porque los eventos se descubren a través del mapa.
