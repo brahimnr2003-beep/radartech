@@ -11,7 +11,7 @@ concurrency:
 
 jobs:
   calidad:
-    name: Lint, formato, tipos y build
+    name: Lint, formato, tipos, tests y build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -25,4 +25,5 @@ jobs:
       - run: npm run lint
       - run: npm run format:check
       - run: npm run typecheck
+      - run: npm test
       - run: npm run build
