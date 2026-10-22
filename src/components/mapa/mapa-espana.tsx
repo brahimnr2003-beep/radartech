@@ -14,6 +14,7 @@ export function MapaEspana({
 }) {
   const router = useRouter();
   const [tooltip, setTooltip] = useState<Tooltip | null>(null);
+  const maximo = Math.max(1, ...Object.values(eventos));
 
   const ir = (slug: ComunidadSlug) => router.push(`/eventos/${slug}`);
 
@@ -54,8 +55,8 @@ export function MapaEspana({
         <g className="pointer-events-none">
           {COMUNIDADES.map(({ slug }) => {
             const { cx, cy } = TRAZADOS[slug];
-            // Más eventos = señal más grande
-            const r = 2 + Math.min(5, eventos[slug] / 14);
+            // Más eventos = señal más grande (relativa a la comunidad con más eventos)
+            const r = 2 + (5 * eventos[slug]) / maximo;
             return (
               <g key={slug}>
                 <circle className="map-blip-ring" cx={cx} cy={cy} r={r} />

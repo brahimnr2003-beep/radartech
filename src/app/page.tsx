@@ -3,7 +3,7 @@ import { Icon } from "@/components/icon";
 import { MapaEspana } from "@/components/mapa/mapa-espana";
 import { CATEGORIAS } from "@/lib/categorias";
 import { COMUNIDADES } from "@/lib/comunidades";
-import { EVENTOS_POR_COMUNIDAD } from "@/lib/datos-ejemplo";
+import { contarEventosPorComunidad } from "@/lib/eventos";
 
 const PASOS = [
   {
@@ -24,12 +24,13 @@ const PASOS = [
 ];
 
 export default function Home() {
-  const totalEventos = Object.values(EVENTOS_POR_COMUNIDAD).reduce(
+  const eventosPorComunidad = contarEventosPorComunidad(COMUNIDADES);
+  const totalEventos = Object.values(eventosPorComunidad).reduce(
     (a, b) => a + b,
     0,
   );
   const porActividad = [...COMUNIDADES].sort(
-    (a, b) => EVENTOS_POR_COMUNIDAD[b.slug] - EVENTOS_POR_COMUNIDAD[a.slug],
+    (a, b) => eventosPorComunidad[b.slug] - eventosPorComunidad[a.slug],
   );
 
   return (
@@ -68,7 +69,7 @@ export default function Home() {
           </div>
           <dl className="mt-14 flex justify-center border-t border-line pt-[22px] font-mono text-[0.78rem] text-text-dim max-sm:flex-wrap">
             {[
-              { valor: COMUNIDADES.length, etiqueta: "Comunidades" },
+              { valor: "Todas", etiqueta: "Comunidades" },
               { valor: `${totalEventos}+`, etiqueta: "Eventos activos" },
               { valor: CATEGORIAS.length, etiqueta: "Categorías tech" },
             ].map(({ valor, etiqueta }) => (
@@ -97,7 +98,7 @@ export default function Home() {
           </SectionHead>
           <div className="grid items-start gap-10 min-[941px]:grid-cols-[1fr_300px]">
             <div className="relative overflow-hidden rounded-lg border border-line bg-bg-1 bg-[radial-gradient(circle_at_30%_20%,rgba(255,106,26,0.05),transparent_55%)] p-5">
-              <MapaEspana eventos={EVENTOS_POR_COMUNIDAD} />
+              <MapaEspana eventos={eventosPorComunidad} />
             </div>
             <div className="flex flex-col gap-3.5">
               <SideCard titulo="Cómo leer el mapa">
@@ -120,7 +121,7 @@ export default function Home() {
                       >
                         {nombre}
                         <span className="font-mono text-[0.76rem] text-text-faint">
-                          {EVENTOS_POR_COMUNIDAD[slug]} ev.
+                          {eventosPorComunidad[slug]} ev.
                         </span>
                       </Link>
                     </li>
