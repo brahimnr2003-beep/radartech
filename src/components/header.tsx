@@ -3,6 +3,7 @@ import { Logo } from "./logo";
 
 const NAV_LINKS = [
   { href: "/#mapa", label: "Mapa" },
+  { href: "/eventos", label: "Eventos" },
   { href: "/#categorias", label: "Categorías" },
   { href: "/anadir-evento", label: "Añadir evento" },
 ];

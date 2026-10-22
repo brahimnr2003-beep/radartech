@@ -51,7 +51,7 @@ Móvil:
 El footer sigue el boceto (`docs/boceto/index.html`):
 
 - **Logo** y lema: «El radar del ecosistema tecnológico español.»
-- **Explorar:** Mapa · Categorías.
+- **Explorar:** Mapa · Eventos · Categorías.
 - **Organizadores:** Añadir evento · Promociona tu evento.
 - **Proyecto:** Sobre nosotros · Contacto.
 
@@ -59,4 +59,4 @@ Debajo de una línea divisoria:
 
 © 2026 RadarTech · Privacidad · Cookies · Términos · Contacto
 
-No hay enlace «Eventos»: llevaría al mismo sitio que «Mapa», porque los eventos se descubren a través del mapa.
+«Eventos» lleva a la página con todos los eventos de España (`/eventos`), que complementa al mapa.

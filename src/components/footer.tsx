@@ -6,6 +6,7 @@ const FOOTER_COLUMNS = [
     title: "Explorar",
     links: [
       { href: "/#mapa", label: "Mapa" },
+      { href: "/eventos", label: "Eventos" },
       { href: "/#categorias", label: "Categorías" },
     ],
   },
