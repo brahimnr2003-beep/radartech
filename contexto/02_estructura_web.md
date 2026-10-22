@@ -10,7 +10,7 @@ Debajo del hero aparecerá rápidamente el elemento principal:
 
 🗺️ Mapa interactivo de España
 
-El mapa mostrará inicialmente las 17 comunidades autónomas.
+El mapa mostrará las 17 comunidades autónomas y las ciudades autónomas de Ceuta y Melilla.
 
 Cada comunidad será una zona interactiva.
 

@@ -6,7 +6,7 @@ Nivel 1
 
 España
 
-Mapa de comunidades autónomas.
+Mapa de comunidades autónomas (más Ceuta y Melilla).
 
 Nivel 2
 

@@ -40,7 +40,7 @@ Las herramientas se incorporan en la fase que las necesita, no antes. El detalle
 ## 2. Portada con el mapa
 
 - Hero con llamada a la acción.
-- Mapa vectorial interactivo de las comunidades autónomas: resaltado al pasar el cursor, tooltip, navegación con clic y teclado.
+- Mapa vectorial interactivo de las 17 comunidades autónomas más Ceuta y Melilla: resaltado al pasar el cursor, tooltip, navegación con clic y teclado.
 - Bloque de las 6 categorías y sección «Cómo funciona».
 
 **Resultado:** portada completa, fiel al boceto.

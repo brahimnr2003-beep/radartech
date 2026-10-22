@@ -28,7 +28,7 @@ El boceto usa datos de ejemplo.
 
 ### Funcionalidades previstas
 
-- **Mapa interactivo de España:** 17 comunidades con hover, tooltip con nº de eventos y navegación a cada comunidad.
+- **Mapa interactivo de España:** 17 comunidades más Ceuta y Melilla, con hover, tooltip con nº de eventos y navegación a cada comunidad.
 - **Página por comunidad:** eventos destacados primero, tarjetas y filtros (fecha, provincia, ciudad, categoría, modalidad, precio).
 - **Ficha de evento** con enlace a la fuente oficial.
 - **Recopilación automática con IA:** detección, extracción y clasificación de eventos desde fuentes públicas.
@@ -76,7 +76,7 @@ The mockup uses sample data.
 
 ### Planned features
 
-- **Interactive map of Spain:** 17 regions with hover, event-count tooltip and navigation to each region.
+- **Interactive map of Spain:** 17 regions plus Ceuta and Melilla, with hover, event-count tooltip and navigation to each region.
 - **Region page:** featured events first, event cards and filters (date, province, city, category, format, price).
 - **Event page** linking to the official source.
 - **AI-powered event collection:** detection, extraction and classification of events from public sources.

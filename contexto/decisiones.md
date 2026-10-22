@@ -124,6 +124,15 @@ Criterios generales: **coste cero** (planes gratuitos sin tarjeta), herramientas
 
 ## Otras decisiones
 
+### [Mapa] — Trazado propio a partir de Natural Earth
+
+- **Decisión:** el mapa de la portada se genera a partir de Natural Earth (`ne_10m_admin_1_states_provinces`, dominio público): provincias unidas por comunidad, proyección cónica conforme de Lambert y simplificado con mapshaper (ejecutado una sola vez, no es dependencia del proyecto). Incluye Ceuta y Melilla, ampliadas para que se puedan señalar; Canarias se desplaza abajo a la izquierda.
+- **Fecha:** 2026-10-23
+- **Motivo:** el origen del trazado del boceto es desconocido y el repositorio es público; Natural Earth no tiene restricciones de uso y trae también las provincias para el futuro nivel 3.
+- **Alternativas descartadas:**
+  - Reutilizar el trazado del boceto — licencia desconocida.
+  - Datos del IGN — exigen atribución (CC BY 4.0) y son más pesados de procesar.
+
 ### [Repositorio] — Ubicación del boceto de la web
 
 - **Decisión:** el boceto se guarda en `docs/boceto/index.html` como referencia de diseño; la aplicación Next.js vive en la raíz del repo.
