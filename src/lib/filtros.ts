@@ -104,6 +104,11 @@ function cumpleFecha(
   }
 }
 
+/** Un evento de varios días ya empezado cuenta como si fuera hoy. */
+function fechaEfectiva(e: Evento, hoy: string): string {
+  return e.fecha < hoy && (e.fechaFin ?? e.fecha) >= hoy ? hoy : e.fecha;
+}
+
 /**
  * Aplica los filtros a una lista de eventos.
  * @param hoy fecha actual en ISO (AAAA-MM-DD), para los filtros de fecha
@@ -115,14 +120,17 @@ export function filtrarEventos(
 ): Evento[] {
   return eventos.filter(
     (e) =>
-      cumpleFecha(e.fecha, filtros.fecha, hoy) &&
+      cumpleFecha(fechaEfectiva(e, hoy), filtros.fecha, hoy) &&
       (!filtros.comunidad || e.comunidad === filtros.comunidad) &&
       (!filtros.provincia || e.provincia === filtros.provincia) &&
       (!filtros.ciudad || e.ciudad === filtros.ciudad) &&
       (!filtros.categoria || e.categoria === filtros.categoria) &&
       (!filtros.modalidad || e.modalidad === filtros.modalidad) &&
+      // Con precio desconocido no se cumple ni «gratuito» ni «de pago»
       (!filtros.precio ||
-        (filtros.precio === "gratuito") === (e.precioDesde === 0)) &&
+        (filtros.precio === "gratuito"
+          ? e.precioDesde === 0
+          : (e.precioDesde ?? 0) > 0)) &&
       (!filtros.tipo || e.tipo === filtros.tipo),
   );
 }

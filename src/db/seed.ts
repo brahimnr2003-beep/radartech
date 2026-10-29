@@ -18,6 +18,8 @@ const db = drizzle({ client: pool, casing: "snake_case" });
 
 const filas = EVENTOS_EJEMPLO.map((evento) => ({
   ...evento,
+  // Los ejemplos no tienen fuente externa
+  fuente: null,
   estado: "aprobado" as const,
   origen: "admin" as const,
 }));

@@ -8,6 +8,20 @@
       "when": 1793309232275,
       "tag": "0000_crea_tabla_eventos",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1793310249597,
+      "tag": "0001_recolector",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1793311125578,
+      "tag": "0002_motivo_clasificacion",
+      "breakpoints": true
     }
   ]
 }

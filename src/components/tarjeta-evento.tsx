@@ -2,7 +2,7 @@ import Link from "next/link";
 import { nombreCategoria } from "@/lib/categorias";
 import {
   MODALIDADES,
-  formatearFecha,
+  formatearFechas,
   formatearPrecio,
   type Evento,
 } from "@/lib/eventos";
@@ -32,7 +32,7 @@ export function TarjetaEvento({ evento }: { evento: Evento }) {
         <h3 className="text-[1.05rem] leading-[1.3]">{evento.nombre}</h3>
         <ul className="flex flex-col gap-1.5 font-mono text-[0.78rem] text-text-dim">
           <DatoTarjeta icono="calendar">
-            {formatearFecha(evento.fecha)}
+            {formatearFechas(evento.fecha, evento.fechaFin)}
           </DatoTarjeta>
           <DatoTarjeta icono="pin">{evento.ciudad}</DatoTarjeta>
           <DatoTarjeta icono="monitor">

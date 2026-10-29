@@ -43,6 +43,20 @@ describe("filtrarEventos", () => {
     ]);
   });
 
+  it("un evento de varios días ya empezado cuenta como de hoy", () => {
+    const eventos = [
+      evento({ slug: "en-curso", fecha: "2026-10-21", fechaFin: "2026-10-24" }),
+      evento({
+        slug: "terminado",
+        fecha: "2026-10-20",
+        fechaFin: "2026-10-22",
+      }),
+    ];
+    expect(slugs(filtrarEventos(eventos, { fecha: "7-dias" }, HOY))).toEqual([
+      "en-curso",
+    ]);
+  });
+
   it("«este mes» incluye lo que queda del mes en curso", () => {
     const eventos = [
       evento({ slug: "pasado", fecha: "2026-10-01" }),
@@ -68,6 +82,7 @@ describe("filtrarEventos", () => {
     const eventos = [
       evento({ slug: "gratis", precioDesde: 0 }),
       evento({ slug: "pago", precioDesde: 20 }),
+      evento({ slug: "desconocido", precioDesde: null }),
     ];
     expect(slugs(filtrarEventos(eventos, { precio: "gratuito" }, HOY))).toEqual(
       ["gratis"],

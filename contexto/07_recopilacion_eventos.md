@@ -53,6 +53,18 @@ Este punto es muy importante.
 
 El sistema no publicará automáticamente cualquier cosa que encuentre.
 
+**Fuentes aprobadas (decisión del 2026-10-29).** El administrador aprueba cada fuente antes de usarla. Los eventos que vienen de una fuente aprobada se publican directamente si la IA los considera eventos tecnológicos; los que no, se guardan como rechazados con el motivo. Desde el panel se podrá ocultar cualquier evento. Lo que no venga de una fuente aprobada (formulario, búsquedas de la IA en internet) entra siempre como pendiente.
+
+Fuentes aprobadas:
+
+| Fuente | Formato | Licencia |
+|---|---|---|
+| [eventos.wiki](https://eventos.wiki) | JSON (Open Tech Events) | CC BY 4.0 |
+| [agenda-tech](https://agenda-tech.h1756.es) | Sitemap + datos schema.org en cada página | CC BY 4.0 |
+| [confs.tech](https://github.com/tech-conferences/conference-data) | JSON en GitHub | MIT |
+
+Reglas del recolector: respetar `robots.txt` y las condiciones de cada web, identificarse, pausar entre peticiones, guardar solo datos y un resumen propio (no textos completos ni imágenes) y citar siempre la fuente con su licencia. Descartadas: Meetup y Eventbrite (sus condiciones prohíben el scraping) y dev.events (no indica si permite reutilizar su contenido).
+
 Existirá un panel de administración con eventos pendientes.
 
 Por ejemplo:
