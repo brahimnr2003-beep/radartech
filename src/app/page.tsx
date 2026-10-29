@@ -3,7 +3,7 @@ import { Icon } from "@/components/icon";
 import { MapaEspana } from "@/components/mapa/mapa-espana";
 import { CATEGORIAS } from "@/lib/categorias";
 import { COMUNIDADES } from "@/lib/comunidades";
-import { contarEventosPorComunidad } from "@/lib/eventos";
+import { contarEventosPorComunidad } from "@/lib/consultas";
 
 const PASOS = [
   {
@@ -23,8 +23,8 @@ const PASOS = [
   },
 ];
 
-export default function Home() {
-  const eventosPorComunidad = contarEventosPorComunidad(COMUNIDADES);
+export default async function Home() {
+  const eventosPorComunidad = await contarEventosPorComunidad(COMUNIDADES);
   const totalEventos = Object.values(eventosPorComunidad).reduce(
     (a, b) => a + b,
     0,

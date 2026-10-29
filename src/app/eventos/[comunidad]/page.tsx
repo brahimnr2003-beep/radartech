@@ -7,7 +7,7 @@ import {
 } from "@/components/listado-eventos";
 import { Migas } from "@/components/migas";
 import { COMUNIDADES } from "@/lib/comunidades";
-import { getEventosDeComunidad } from "@/lib/eventos";
+import { getEventosDeComunidad } from "@/lib/consultas";
 
 export function generateStaticParams() {
   return COMUNIDADES.map(({ slug }) => ({ comunidad: slug }));
@@ -34,7 +34,7 @@ export default async function PaginaComunidad({
   const comunidad = buscarComunidad((await params).comunidad);
   if (!comunidad) notFound();
 
-  const eventos = getEventosDeComunidad(comunidad.slug);
+  const eventos = await getEventosDeComunidad(comunidad.slug);
   const provincias = new Set(eventos.map((e) => e.provincia));
   const destacados = eventos.filter((e) => e.destacado);
 

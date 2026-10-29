@@ -11,8 +11,28 @@ concurrency:
 
 jobs:
   calidad:
-    name: Lint, formato, tipos, tests y build
+    name: Lint, formato, tipos, tests, migraciones y build
     runs-on: ubuntu-latest
+
+    # Base de datos temporal: se crea para cada ejecución y se descarta al acabar
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_USER: radartech
+          POSTGRES_PASSWORD: radartech
+          POSTGRES_DB: radartech
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U radartech"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 10
+
+    env:
+      DATABASE_URL: postgres://radartech:radartech@localhost:5432/radartech
+
     steps:
       - uses: actions/checkout@v4
 
@@ -26,4 +46,6 @@ jobs:
       - run: npm run format:check
       - run: npm run typecheck
       - run: npm test
+      - run: npm run db:migrate
+      - run: npm run db:seed
       - run: npm run build

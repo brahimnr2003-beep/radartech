@@ -5,7 +5,7 @@ import {
   ListadoEventosInicial,
 } from "@/components/listado-eventos";
 import { Migas } from "@/components/migas";
-import { getEventos } from "@/lib/eventos";
+import { getEventos } from "@/lib/consultas";
 
 export const metadata: Metadata = {
   title: "Todos los eventos tecnológicos de España — RadarTech",
@@ -13,8 +13,8 @@ export const metadata: Metadata = {
     "Todos los próximos eventos tecnológicos de España en un solo listado: filtra por comunidad, ubicación, fecha, categoría, modalidad, precio y tipo de evento.",
 };
 
-export default function PaginaEventos() {
-  const eventos = getEventos();
+export default async function PaginaEventos() {
+  const eventos = await getEventos();
   const comunidades = new Set(eventos.map((e) => e.comunidad));
   const destacados = eventos.filter((e) => e.destacado);
 

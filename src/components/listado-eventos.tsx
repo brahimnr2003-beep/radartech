@@ -3,7 +3,12 @@
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { CATEGORIAS } from "@/lib/categorias";
 import { COMUNIDADES } from "@/lib/comunidades";
-import { MODALIDADES, TIPOS_EVENTO, type Evento } from "@/lib/eventos";
+import {
+  MODALIDADES,
+  TIPOS_EVENTO,
+  hoyEnEspana,
+  type Evento,
+} from "@/lib/eventos";
 import {
   CLAVES_FILTRO,
   FECHAS,
@@ -44,7 +49,7 @@ export function ListadoEventos({ eventos, conComunidad }: Props) {
 
   return (
     <PanelEventos
-      eventos={filtrarEventos(eventos, filtros, hoyISO())}
+      eventos={filtrarEventos(eventos, filtros, hoyEnEspana())}
       todos={eventos}
       filtros={filtros}
       conComunidad={conComunidad}
@@ -66,13 +71,6 @@ export function ListadoEventosInicial({ eventos, conComunidad }: Props) {
       onLimpiar={() => {}}
     />
   );
-}
-
-function hoyISO(): string {
-  const ahora = new Date();
-  const mes = String(ahora.getMonth() + 1).padStart(2, "0");
-  const dia = String(ahora.getDate()).padStart(2, "0");
-  return `${ahora.getFullYear()}-${mes}-${dia}`;
 }
 
 const estiloSelector = (activo: boolean) =>
