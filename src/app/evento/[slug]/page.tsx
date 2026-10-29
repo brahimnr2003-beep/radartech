@@ -7,7 +7,7 @@ import { EtiquetaCategoria } from "@/components/tarjeta-evento";
 import { nombreCategoria } from "@/lib/categorias";
 import { COMUNIDADES } from "@/lib/comunidades";
 import { getEvento, getSlugsEventos } from "@/lib/consultas";
-import { MODALIDADES, formatearFecha, formatearPrecio } from "@/lib/eventos";
+import { MODALIDADES, formatearFechas, formatearPrecio } from "@/lib/eventos";
 
 export async function generateStaticParams() {
   const slugs = await getSlugsEventos();
@@ -41,7 +41,7 @@ export default async function PaginaEvento({
   const datos: { icono: IconName; texto: string }[] = [
     {
       icono: "calendar",
-      texto: [formatearFecha(evento.fecha), evento.hora]
+      texto: [formatearFechas(evento.fecha, evento.fechaFin), evento.hora]
         .filter(Boolean)
         .join(" · "),
     },
@@ -139,6 +139,19 @@ export default async function PaginaEvento({
                 Serás redirigido a la fuente oficial del organizador para
                 completar tu inscripción.
               </p>
+              {evento.fuente && (
+                <p className="mt-3 border-t border-line pt-3 font-mono text-[0.72rem] text-text-faint">
+                  Fuente:{" "}
+                  <a
+                    href={evento.fuente.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-text-dim underline-offset-2 hover:text-orange-bright hover:underline"
+                  >
+                    {evento.fuente.nombre}
+                  </a>
+                </p>
+              )}
             </div>
             <div className="rounded-md border border-line bg-bg-1 p-6">
               <span className="font-mono text-[0.76rem] text-text-faint">

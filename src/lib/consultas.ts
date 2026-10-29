@@ -1,7 +1,7 @@
 // Consultas de eventos públicos. Solo en el servidor.
 // Se guardan en caché como mucho una hora: así los eventos ya celebrados
 // desaparecen solos sin consultar la base de datos en cada visita.
-import { and, asc, count, eq, gte } from "drizzle-orm";
+import { and, asc, count, eq, gte, sql } from "drizzle-orm";
 import { cacheLife, cacheTag } from "next/cache";
 import { db } from "@/db";
 import { eventos, type FilaEvento } from "@/db/schema";
@@ -12,7 +12,9 @@ import { hoyEnEspana, type Evento } from "./eventos";
 export const TAG_EVENTOS = "eventos";
 
 const publicados = () => eq(eventos.estado, "aprobado");
-const proximos = () => gte(eventos.fecha, hoyEnEspana());
+// Un evento de varios días sigue visible hasta su último día
+const proximos = () =>
+  gte(sql`coalesce(${eventos.fechaFin}, ${eventos.fecha})`, hoyEnEspana());
 
 function aEvento(fila: FilaEvento): Evento {
   return {
@@ -20,6 +22,7 @@ function aEvento(fila: FilaEvento): Evento {
     nombre: fila.nombre,
     descripcion: fila.descripcion,
     fecha: fila.fecha,
+    fechaFin: fila.fechaFin ?? undefined,
     // Postgres devuelve «09:30:00»
     hora: fila.hora?.slice(0, 5),
     comunidad: fila.comunidad,
@@ -30,8 +33,12 @@ function aEvento(fila: FilaEvento): Evento {
     tipo: fila.tipo,
     modalidad: fila.modalidad,
     precioDesde: fila.precioDesde,
-    organizador: fila.organizador,
+    organizador: fila.organizador ?? undefined,
     urlOficial: fila.urlOficial,
+    fuente:
+      fila.fuente && fila.urlFuente
+        ? { nombre: fila.fuente, url: fila.urlFuente }
+        : undefined,
     destacado: fila.destacado,
     ponentes: fila.ponentes ?? undefined,
   };

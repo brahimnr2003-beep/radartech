@@ -1,0 +1,1 @@
+ALTER TABLE "eventos" ADD COLUMN "motivo_clasificacion" text;

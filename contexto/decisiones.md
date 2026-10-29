@@ -124,6 +124,20 @@ Criterios generales: **coste cero** (planes gratuitos sin tarjeta), herramientas
 
 ## Otras decisiones
 
+### [Recopilación] — Fuentes abiertas y clasificación con Gemini
+
+- **Decisión:**
+  - Recolector propio (`npm run recolectar`) que lee eventos.wiki, agenda-tech y confs.tech, elimina duplicados entre fuentes y frente a la base de datos, y clasifica cada evento nuevo con **Gemini 3.5 Flash-Lite** (plan gratuito) mediante el Vercel AI SDK con salida validada por Zod.
+  - La IA decide si es un evento tech, asigna categoría, tipo, comunidad, provincia, ciudad y modalidad, escribe un resumen propio y explica el motivo. Los descartados se guardan como rechazados para no volver a clasificarlos.
+  - Eventos de fuentes aprobadas: publicación directa. Se cita la fuente en la ficha y en el pie.
+  - Cada ejecución guarda sus métricas en `ejecuciones_recolector`.
+- **Fecha:** 2026-10-29
+- **Motivo:** son las fuentes con datos estructurados y licencia que permite reutilizarlos; la IA resuelve la parte difícil (relevancia, categoría, ubicación) sin reglas frágiles.
+- **Alternativas descartadas:**
+  - Meetup y Eventbrite — sus condiciones prohíben el scraping.
+  - dev.events — no indica si permite reutilizar su contenido.
+  - Clasificar con palabras clave — más errores y sin resúmenes.
+
 ### [Base de datos] — Configuración de la fase 4
 
 - **Decisión:**

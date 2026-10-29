@@ -26,6 +26,29 @@ const FOOTER_COLUMNS = [
   },
 ];
 
+// Atribución que exigen las licencias de las fuentes del recolector
+const FUENTES_DATOS = [
+  {
+    nombre: "eventos.wiki",
+    url: "https://eventos.wiki",
+    licencia: "CC BY 4.0",
+    urlLicencia: "https://creativecommons.org/licenses/by/4.0/deed.es",
+  },
+  {
+    nombre: "agenda-tech",
+    url: "https://agenda-tech.h1756.es",
+    licencia: "CC BY 4.0",
+    urlLicencia: "https://creativecommons.org/licenses/by/4.0/deed.es",
+  },
+  {
+    nombre: "confs.tech",
+    url: "https://github.com/tech-conferences/conference-data",
+    licencia: "MIT",
+    urlLicencia:
+      "https://github.com/tech-conferences/conference-data/blob/main/LICENSE",
+  },
+];
+
 const LEGAL_LINKS = [
   { href: "/privacidad", label: "Privacidad" },
   { href: "/cookies", label: "Cookies" },
@@ -78,6 +101,22 @@ export function Footer() {
             ))}
           </ul>
         </div>
+        <p className="mt-4 font-mono text-[0.7rem] text-text-faint">
+          Datos de eventos:{" "}
+          {FUENTES_DATOS.map(({ nombre, url, licencia, urlLicencia }, i) => (
+            <span key={nombre}>
+              {i > 0 && " · "}
+              <a href={url} className="hover:text-orange-bright">
+                {nombre}
+              </a>{" "}
+              (
+              <a href={urlLicencia} className="hover:text-orange-bright">
+                {licencia}
+              </a>
+              )
+            </span>
+          ))}
+        </p>
       </div>
     </footer>
   );

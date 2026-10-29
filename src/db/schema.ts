@@ -45,6 +45,8 @@ export const eventos = pgTable(
     nombre: text().notNull(),
     descripcion: text().notNull(),
     fecha: date({ mode: "string" }).notNull(),
+    /** Último día en eventos de varios días */
+    fechaFin: date({ mode: "string" }),
     hora: time(),
     comunidad: comunidadEnum().notNull(),
     provincia: text().notNull(),
@@ -53,14 +55,21 @@ export const eventos = pgTable(
     categoria: categoriaEnum().notNull(),
     tipo: tipoEventoEnum().notNull(),
     modalidad: modalidadEnum().notNull(),
-    /** Precio mínimo en euros; 0 = gratuito */
-    precioDesde: integer().notNull().default(0),
-    organizador: text().notNull(),
+    /** Precio mínimo en euros; 0 = gratuito, null = desconocido */
+    precioDesde: integer(),
+    organizador: text(),
     urlOficial: text().notNull(),
     destacado: boolean().notNull().default(false),
     ponentes: jsonb().$type<{ nombre: string; cargo: string }[]>(),
     estado: estadoEnum().notNull().default("pendiente"),
     origen: origenEnum().notNull(),
+    /** Web de la que se recogió (recolector): se cita en la ficha */
+    fuente: text(),
+    urlFuente: text(),
+    /** Identificador en la fuente, para no duplicar entre ejecuciones */
+    idExterno: text().unique(),
+    /** Por qué la IA lo publicó o descartó (se mostrará en el panel) */
+    motivoClasificacion: text(),
     creadoEn: timestamp({ withTimezone: true }).notNull().defaultNow(),
     actualizadoEn: timestamp({ withTimezone: true })
       .notNull()
@@ -73,6 +82,21 @@ export const eventos = pgTable(
     index("eventos_comunidad_idx").on(t.comunidad),
   ],
 );
+
+/** Una fila por ejecución del recolector: métricas de la recopilación. */
+export const ejecucionesRecolector = pgTable("ejecuciones_recolector", {
+  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  inicio: timestamp({ withTimezone: true }).notNull(),
+  duracionMs: integer().notNull(),
+  /** Eventos leídos por fuente, p. ej. { "eventos.wiki": 16 } */
+  leidosPorFuente: jsonb().$type<Record<string, number>>().notNull(),
+  /** Fuentes que fallaron y por qué */
+  errores: jsonb().$type<Record<string, string>>().notNull(),
+  unicos: integer().notNull(),
+  yaConocidos: integer().notNull(),
+  publicados: integer().notNull(),
+  descartados: integer().notNull(),
+});
 
 export type FilaEvento = typeof eventos.$inferSelect;
 export type NuevoEvento = typeof eventos.$inferInsert;

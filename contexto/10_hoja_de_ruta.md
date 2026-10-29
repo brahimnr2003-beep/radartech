@@ -4,19 +4,20 @@ Plan de desarrollo de RadarTech, desde la preparación del proyecto hasta la ver
 
 ```
  ✔ 0  Preparación
- │
- ▼ 1  Aspecto visual
- ▼ 2  Portada con el mapa
- ▼ 3  Página de comunidad y ficha de evento
- ▼ 4  Base de datos
+ ✔ 1  Aspecto visual
+ ✔ 2  Portada con el mapa
+ ✔ 3  Página de comunidad y ficha de evento
+ ✔ 4  Base de datos
+ ▼ 8  Recopilación automática con IA   (adelantada)
+ ▼ 7  Publicación  ◄── primera versión pública, con eventos reales
  ▼ 5  Formulario «Añadir evento»
  ▼ 6  Panel de administración
- ▼ 7  Publicación  ◄── primera versión pública
- ▼ 8  Recopilación automática con IA
  ▼ 9  Remate final
  │
  ○ 10 Futuro
 ```
+
+Orden revisado el 2026-10-29: se adelantan la recopilación automática y la publicación para tener cuanto antes una versión pública con eventos reales. La numeración de las fases se mantiene.
 
 Las herramientas se incorporan en la fase que las necesita, no antes. El detalle de cada elección está en [decisiones.md](decisiones.md).
 
@@ -90,9 +91,10 @@ Las herramientas se incorporan en la fase que las necesita, no antes. El detalle
 
 ## 8. Recopilación automática con IA
 
-- Selección y validación de fuentes (webs oficiales, APIs, RSS, plataformas, universidades, comunidades).
+- Fuentes aprobadas: eventos.wiki, agenda-tech y confs.tech (ver [07_recopilacion_eventos.md](07_recopilacion_eventos.md)); eliminación de duplicados entre fuentes.
 - Extracción y clasificación con **Gemini** vía Vercel AI SDK, con salida estructurada validada por Zod.
 - Ejecución periódica en **GitHub Actions**.
+- Siguiente mejora: que la IA busque eventos en internet para cubrir comunidades sin fuentes; esos entran como pendientes.
 - Métricas desde el primer día: nº de fuentes, eventos procesados y publicados al mes, porcentaje aprobado sin editar y tiempo/coste por evento.
 
 **Resultado:** eventos nuevos llegan solos a la cola de revisión.

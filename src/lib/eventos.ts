@@ -21,6 +21,8 @@ export type Evento = {
   descripcion: string;
   /** Fecha ISO (AAAA-MM-DD) */
   fecha: string;
+  /** Último día, en eventos de varios días */
+  fechaFin?: string;
   /** Hora local (HH:MM) */
   hora?: string;
   comunidad: ComunidadSlug;
@@ -31,10 +33,12 @@ export type Evento = {
   categoria: CategoriaSlug;
   tipo: TipoEvento;
   modalidad: Modalidad;
-  /** Precio mínimo en euros; 0 = gratuito */
-  precioDesde: number;
-  organizador: string;
+  /** Precio mínimo en euros; 0 = gratuito, null = desconocido */
+  precioDesde: number | null;
+  organizador?: string;
   urlOficial: string;
+  /** Web de la que se recogió el evento, para citarla */
+  fuente?: { nombre: string; url: string };
   destacado: boolean;
   ponentes?: { nombre: string; cargo: string }[];
 };
@@ -67,7 +71,15 @@ export function formatearFecha(fecha: string): string {
   return FORMATO_FECHA.format(new Date(`${fecha}T00:00:00Z`)).replace(".", "");
 }
 
-export function formatearPrecio(precioDesde: number): string {
+/** «2026-11-06» + «2026-11-08» → «6 nov 2026 – 8 nov 2026» */
+export function formatearFechas(fecha: string, fechaFin?: string): string {
+  return fechaFin && fechaFin !== fecha
+    ? `${formatearFecha(fecha)} – ${formatearFecha(fechaFin)}`
+    : formatearFecha(fecha);
+}
+
+export function formatearPrecio(precioDesde: number | null): string {
+  if (precioDesde === null) return "Consultar precio";
   return precioDesde === 0 ? "Gratuito" : `Desde ${precioDesde}€`;
 }
 
