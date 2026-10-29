@@ -6,22 +6,22 @@ import { Migas } from "@/components/migas";
 import { EtiquetaCategoria } from "@/components/tarjeta-evento";
 import { nombreCategoria } from "@/lib/categorias";
 import { COMUNIDADES } from "@/lib/comunidades";
-import {
-  MODALIDADES,
-  formatearFecha,
-  formatearPrecio,
-  getEvento,
-  getSlugsEventos,
-} from "@/lib/eventos";
+import { getEvento, getSlugsEventos } from "@/lib/consultas";
+import { MODALIDADES, formatearFecha, formatearPrecio } from "@/lib/eventos";
 
-export function generateStaticParams() {
-  return getSlugsEventos().map((slug) => ({ slug }));
+export async function generateStaticParams() {
+  const slugs = await getSlugsEventos();
+  // Con Cache Components debe haber al menos uno; con la base de datos vacía,
+  // un valor de relleno que la página resuelve con notFound()
+  return slugs.length > 0
+    ? slugs.map((slug) => ({ slug }))
+    : [{ slug: "__sin-eventos__" }];
 }
 
 export async function generateMetadata({
   params,
 }: PageProps<"/evento/[slug]">): Promise<Metadata> {
-  const evento = getEvento((await params).slug);
+  const evento = await getEvento((await params).slug);
   if (!evento) return {};
   return {
     title: `${evento.nombre} — RadarTech`,
@@ -32,7 +32,7 @@ export async function generateMetadata({
 export default async function PaginaEvento({
   params,
 }: PageProps<"/evento/[slug]">) {
-  const evento = getEvento((await params).slug);
+  const evento = await getEvento((await params).slug);
   if (!evento) notFound();
 
   const comunidad = COMUNIDADES.find((c) => c.slug === evento.comunidad)!;

@@ -8,3 +8,5 @@ next-env.d.ts
 # Documentación y boceto: se mantienen tal como se escribieron
 *.md
 docs/
+# Migraciones generadas por drizzle-kit
+drizzle/

@@ -124,6 +124,21 @@ Criterios generales: **coste cero** (planes gratuitos sin tarjeta), herramientas
 
 ## Otras decisiones
 
+### [Base de datos] — Configuración de la fase 4
+
+- **Decisión:**
+  - PostgreSQL 17 en Docker (`docker-compose.yml`, puerto 5433 en el equipo para no chocar con instalaciones locales de PostgreSQL); misma versión mayor que se usará en Neon.
+  - Conexión con `pg` (node-postgres) a través de Drizzle; migraciones versionadas en `drizzle/`.
+  - Tabla `eventos` preparada para las fases siguientes: `estado` (pendiente / aprobado / rechazado), `origen` (formulario / IA / admin) y fechas de creación y actualización. La web solo muestra eventos aprobados y no celebrados.
+  - Consultas en caché con `use cache` y `cacheLife("hours")`: las páginas se regeneran como mucho cada hora; la etiqueta `eventos` permitirá invalidarlas al aprobar un evento.
+  - Eventos de ejemplo cargados con `npm run db:seed` (script con `tsx`), solo contra bases de datos locales.
+  - La CI levanta un PostgreSQL temporal, aplica las migraciones y carga los ejemplos antes de construir.
+- **Fecha:** 2026-10-29
+- **Motivo:** reproducible en cualquier equipo, sin coste, y cerca de cómo se trabaja en empresas (migraciones versionadas y comprobadas en CI). La caché por horas reduce las consultas al plan gratuito de Neon.
+- **Alternativas descartadas:**
+  - Renderizar en cada visita — más consumo de base de datos sin beneficio real para este tipo de contenido.
+  - Construir en la CI sin base de datos — no comprobaría las migraciones.
+
 ### [Mapa] — Trazado propio a partir de Natural Earth
 
 - **Decisión:** el mapa de la portada se genera a partir de Natural Earth (`ne_10m_admin_1_states_provinces`, dominio público): provincias unidas por comunidad, proyección cónica conforme de Lambert y simplificado con mapshaper (ejecutado una sola vez, no es dependencia del proyecto). Incluye Ceuta y Melilla, ampliadas para que se puedan señalar; Canarias se desplaza abajo a la izquierda.

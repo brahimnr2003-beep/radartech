@@ -1,7 +1,7 @@
-import type { Evento } from "./eventos";
+import type { Evento } from "../lib/eventos";
 
 // DATOS DE EJEMPLO para desarrollo: eventos, organizadores y ponentes son ficticios.
-// Se sustituyen por la base de datos en la fase 4 (ver contexto/10_hoja_de_ruta.md).
+// Solo para desarrollo y CI: se cargan con `npm run db:seed`. Nunca en producción.
 
 type EventoEjemplo = Omit<Evento, "urlOficial" | "destacado"> & {
   destacado?: boolean;

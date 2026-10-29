@@ -1,0 +1,23 @@
+# PostgreSQL para desarrollo local. Arranca con: npm run db:up
+# En producción la base de datos está en Neon (misma versión mayor).
+services:
+  postgres:
+    image: postgres:17-alpine
+    container_name: radartech-postgres
+    environment:
+      POSTGRES_USER: radartech
+      POSTGRES_PASSWORD: radartech
+      POSTGRES_DB: radartech
+    ports:
+      # 5433 en el equipo: el 5432 suele estar ocupado por un PostgreSQL instalado
+      - "5433:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U radartech"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  postgres-data:
