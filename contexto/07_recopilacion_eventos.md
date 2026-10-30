@@ -117,4 +117,12 @@ El administrador podrá:
 
 Esto permite que los propios organizadores ayuden a aumentar la cantidad de eventos de la plataforma.
 
+**Implementación (2026-10-30)** — página `/anadir-evento`:
+
+- Además de los campos anteriores pide **comunidad, provincia, modalidad y tipo de evento** (necesarios para el mapa y los filtros), y como opcionales lugar, fecha de fin, hora y precio (0 = gratuito; vacío = desconocido).
+- La **imagen** es un enlace al cartel (no se suben archivos); sin él se usa la portada de la categoría.
+- Se pide un **email de contacto** que no se publica y solo ve el administrador. No se envían correos automáticos por ahora.
+- **Anti-spam sin cuentas:** campo trampa invisible, rechazo de envíos hechos en menos de 3 segundos, máximo 20 envíos por hora en total y 3 al día por email. A los bots se les responde como si el envío hubiera ido bien.
+- Los datos se validan en el servidor (Zod) y el evento se guarda como **pendiente** con origen «formulario».
+
 Los eventos que sean de especial relevancia, o el organizador pague por su promoción apareceran como eventos destacados (en cada provincia al entrar a la página, primero se muestran los eventos destacados).

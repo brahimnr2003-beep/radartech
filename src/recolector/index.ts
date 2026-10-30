@@ -4,6 +4,7 @@ import { eq, gte, sql } from "drizzle-orm";
 import { db } from "../db";
 import { ejecucionesRecolector, eventos } from "../db/schema";
 import { hoyEnEspana } from "../lib/eventos";
+import { crearSlug } from "../lib/slug";
 import { clasificar } from "./clasificar";
 import { deduplicar, sonElMismoEvento } from "./deduplicar";
 import { leerAgendaTech } from "./fuentes/agenda-tech";
@@ -18,18 +19,6 @@ const FUENTES: Record<NombreFuente, (desde: string) => Promise<EventoBruto[]>> =
     "agenda-tech": leerAgendaTech,
     "confs.tech": leerConfsTech,
   };
-
-/** «PyConES Barcelona 2026» → «pycones-barcelona-2026» */
-export function crearSlug(nombre: string, año: string): string {
-  const base = nombre
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(/[̀-ͯ]/g, "")
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-|-$/g, "");
-  // El año distingue ediciones distintas del mismo evento
-  return base.includes(año) ? base : `${base}-${año}`;
-}
 
 /** «2026-11-06T15:30:00» → «15:30»; sin hora o a medianoche, nada */
 function horaDe(inicio: string): string | undefined {
