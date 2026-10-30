@@ -117,6 +117,7 @@ async function main() {
           (sonElMismoEvento({ nombre: e.nombre, inicio: e.fecha }, c) &&
             mismaCiudad(c.ciudad, e.ciudad)) ||
           (c.inicio === e.fecha &&
+            mismaCiudad(c.ciudad, e.ciudad) &&
             normalizarUrl(c.urlOficial) === normalizarUrl(e.urlOficial)),
       );
       if (repetido) {
@@ -144,7 +145,8 @@ async function main() {
           estado: "pendiente",
           origen: "ia",
           fuente: FUENTE,
-          idExterno: `importacion:${normalizarUrl(e.urlOficial)}#${e.fecha}`,
+          // Con la ciudad: varias sedes pueden compartir web y fecha
+          idExterno: `importacion:${normalizarUrl(e.urlOficial)}#${e.fecha}#${e.ciudad.toLowerCase()}`,
           motivoClasificacion: fuenteVerificacion
             ? `Importado de ${archivo}. Verificado en ${fuenteVerificacion}`
             : `Importado de ${archivo}`,

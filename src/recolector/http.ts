@@ -33,7 +33,15 @@ export async function existeEnlace(url: string): Promise<boolean> {
       signal: AbortSignal.timeout(15_000),
     });
     return respuesta.ok || [401, 403, 405, 429].includes(respuesta.status);
-  } catch {
-    return false;
+  } catch (error) {
+    // Un certificado mal configurado (p. ej. sin el intermedio) no impide
+    // abrir la web en el navegador: el servidor existe y respondió
+    const codigo = (error as { cause?: { code?: string } }).cause?.code;
+    return !!codigo && CERTIFICADO_INCOMPLETO.includes(codigo);
   }
 }
+
+const CERTIFICADO_INCOMPLETO = [
+  "UNABLE_TO_GET_ISSUER_CERT_LOCALLY",
+  "UNABLE_TO_VERIFY_LEAF_SIGNATURE",
+];
