@@ -3,6 +3,8 @@
 **Descubre los eventos tecnológicos más relevantes de España.**
 *Discover the most relevant tech events in Spain.*
 
+**Web:** https://radartech-lyart.vercel.app
+
 [Español](#español) · [English](#english)
 
 ---
@@ -22,19 +24,38 @@ Hoy esa información está dispersa entre webs de empresas, universidades, asoci
 | Definición de producto | ✅ Completa ([`contexto/`](contexto/)) |
 | Diseño / boceto navegable | ✅ Terminado ([`docs/boceto/index.html`](docs/boceto/index.html)) |
 | Stack tecnológico | ✅ Decidido ([`decisiones.md`](contexto/decisiones.md)) |
-| Desarrollo | 🚧 En curso |
+| Web pública con eventos reales | ✅ Publicada en Vercel + Neon |
+| Recopilación diaria con IA | ✅ GitHub Actions + Gemini |
+| Formulario y panel de administración | 🚧 En curso |
 
-El boceto usa datos de ejemplo.
-
-### Funcionalidades previstas
+### Funcionalidades
 
 - **Mapa interactivo de España:** 17 comunidades más Ceuta y Melilla, con hover, tooltip con nº de eventos y navegación a cada comunidad.
-- **Página por comunidad:** eventos destacados primero, tarjetas y filtros (fecha, provincia, ciudad, categoría, modalidad, precio).
-- **Ficha de evento** con enlace a la fuente oficial.
-- **Recopilación automática con IA:** detección, extracción y clasificación de eventos desde fuentes públicas.
-- **Supervisión humana:** todo evento pasa por un panel de administración (aprobar / editar / rechazar) antes de publicarse.
-- **Formulario para organizadores** que quieran publicar su evento.
+- **Página por comunidad y de todos los eventos:** destacados primero, tarjetas con el cartel oficial y filtros (fecha, comunidad, ubicación, categoría, modalidad, precio, tipo).
+- **Ficha de evento** con enlace a la web oficial y cita de la fuente.
+- **Recopilación automática con IA:** cada día se leen agendas abiertas (eventos.wiki, agenda-tech, confs.tech), se eliminan duplicados y Gemini decide si cada evento es tech y lo clasifica.
+- **Supervisión humana** *(en desarrollo)*: los eventos de otras vías pasan por un panel de administración (aprobar / editar / rechazar) antes de publicarse.
+- **Formulario para organizadores** *(en desarrollo)* que quieran publicar su evento.
 - **Seis categorías:** IA · Data · Software · Cloud & DevOps · Ciberseguridad · Startups & Negocio.
+
+### Stack
+
+Next.js 16 (App Router, Cache Components) · TypeScript · Tailwind CSS 4 · PostgreSQL (Neon) + Drizzle ORM · Vercel AI SDK + Gemini · Vitest · ESLint + Prettier · GitHub Actions · Vercel.
+
+### Cómo ejecutarlo en local
+
+Requisitos: Node.js 24 y Docker.
+
+```bash
+npm install
+cp .env.example .env.local   # añade tu GOOGLE_GENERATIVE_AI_API_KEY para el recolector
+npm run db:up                # PostgreSQL en Docker (puerto 5433)
+npm run db:migrate
+npm run db:seed              # eventos de ejemplo (solo en local)
+npm run dev                  # http://localhost:3000
+```
+
+`npm run recolectar` busca eventos reales y los clasifica con Gemini.
 
 ### Qué muestra el boceto
 
@@ -49,8 +70,14 @@ El boceto usa datos de ejemplo.
 radartech/
 ├── contexto/        # Documentación de producto, UX, negocio y registro de decisiones
 ├── docs/boceto/     # Boceto navegable (HTML/CSS/JS)
+├── drizzle/         # Migraciones de la base de datos
 ├── public/          # Recursos estáticos
-└── src/app/         # Aplicación Next.js (App Router)
+└── src/
+    ├── app/         # Páginas (App Router)
+    ├── components/  # Componentes de interfaz y mapa
+    ├── db/          # Esquema, conexión y datos de ejemplo
+    ├── lib/         # Dominio: eventos, filtros, consultas
+    └── recolector/  # Lectura de fuentes, duplicados y clasificación con IA
 ```
 
 ---
@@ -70,19 +97,27 @@ That information is currently scattered across company, university and community
 | Product definition | ✅ Done ([`contexto/`](contexto/), in Spanish) |
 | Design / clickable mockup | ✅ Done ([`docs/boceto/index.html`](docs/boceto/index.html)) |
 | Tech stack | ✅ Decided ([`decisiones.md`](contexto/decisiones.md), in Spanish) |
-| Development | 🚧 In progress |
+| Public website with real events | ✅ Live on Vercel + Neon |
+| Daily AI-powered collection | ✅ GitHub Actions + Gemini |
+| Submission form and admin panel | 🚧 In progress |
 
-The mockup uses sample data.
-
-### Planned features
+### Features
 
 - **Interactive map of Spain:** 17 regions plus Ceuta and Melilla, with hover, event-count tooltip and navigation to each region.
-- **Region page:** featured events first, event cards and filters (date, province, city, category, format, price).
-- **Event page** linking to the official source.
-- **AI-powered event collection:** detection, extraction and classification of events from public sources.
-- **Human in the loop:** every event goes through an admin panel (approve / edit / reject) before going live.
-- **Submission form** for event organisers.
+- **Region page and all-events page:** featured events first, cards with the official poster and filters (date, region, location, category, format, price, type).
+- **Event page** linking to the official website and citing the source.
+- **AI-powered event collection:** every day open event listings (eventos.wiki, agenda-tech, confs.tech) are read, duplicates removed and Gemini decides whether each event is tech and classifies it.
+- **Human in the loop** *(in progress)*: events from other channels go through an admin panel (approve / edit / reject) before going live.
+- **Submission form** *(in progress)* for event organisers.
 - **Six categories:** AI · Data · Software · Cloud & DevOps · Cybersecurity · Startups & Business.
+
+### Stack
+
+Next.js 16 (App Router, Cache Components) · TypeScript · Tailwind CSS 4 · PostgreSQL (Neon) + Drizzle ORM · Vercel AI SDK + Gemini · Vitest · ESLint + Prettier · GitHub Actions · Vercel.
+
+### Running locally
+
+Requirements: Node.js 24 and Docker. See the commands in the [Spanish section](#cómo-ejecutarlo-en-local).
 
 ### What the mockup demonstrates
 

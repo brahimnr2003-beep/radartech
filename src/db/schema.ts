@@ -59,6 +59,9 @@ export const eventos = pgTable(
     precioDesde: integer(),
     organizador: text(),
     urlOficial: text().notNull(),
+    /** Cartel oficial (enlazado, no copiado); sin él se muestra la portada de la categoría */
+    imagenUrl: text(),
+    imagenAlt: text(),
     destacado: boolean().notNull().default(false),
     ponentes: jsonb().$type<{ nombre: string; cargo: string }[]>(),
     estado: estadoEnum().notNull().default("pendiente"),

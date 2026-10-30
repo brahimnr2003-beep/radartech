@@ -39,6 +39,12 @@ function aEvento(fila: FilaEvento): Evento {
       fila.fuente && fila.urlFuente
         ? { nombre: fila.fuente, url: fila.urlFuente }
         : undefined,
+    imagen: fila.imagenUrl
+      ? {
+          url: fila.imagenUrl,
+          alt: fila.imagenAlt ?? `Cartel de ${fila.nombre}`,
+        }
+      : undefined,
     destacado: fila.destacado,
     ponentes: fila.ponentes ?? undefined,
   };

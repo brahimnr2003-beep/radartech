@@ -1,0 +1,433 @@
+{
+  "id": "229ad1d1-baf6-4e9e-8e61-52c046c47e34",
+  "prevId": "f8d1d35f-a0b4-4097-ac28-e4d48b2bea0e",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.ejecuciones_recolector": {
+      "name": "ejecuciones_recolector",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "identity": {
+            "type": "always",
+            "name": "ejecuciones_recolector_id_seq",
+            "schema": "public",
+            "increment": "1",
+            "startWith": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "cache": "1",
+            "cycle": false
+          }
+        },
+        "inicio": {
+          "name": "inicio",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "duracion_ms": {
+          "name": "duracion_ms",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "leidos_por_fuente": {
+          "name": "leidos_por_fuente",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "errores": {
+          "name": "errores",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "unicos": {
+          "name": "unicos",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "ya_conocidos": {
+          "name": "ya_conocidos",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "publicados": {
+          "name": "publicados",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "descartados": {
+          "name": "descartados",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.eventos": {
+      "name": "eventos",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "identity": {
+            "type": "always",
+            "name": "eventos_id_seq",
+            "schema": "public",
+            "increment": "1",
+            "startWith": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "cache": "1",
+            "cycle": false
+          }
+        },
+        "slug": {
+          "name": "slug",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "nombre": {
+          "name": "nombre",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "descripcion": {
+          "name": "descripcion",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "fecha": {
+          "name": "fecha",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "fecha_fin": {
+          "name": "fecha_fin",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "hora": {
+          "name": "hora",
+          "type": "time",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "comunidad": {
+          "name": "comunidad",
+          "type": "comunidad",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "provincia": {
+          "name": "provincia",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "ciudad": {
+          "name": "ciudad",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "lugar": {
+          "name": "lugar",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "categoria": {
+          "name": "categoria",
+          "type": "categoria",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "tipo": {
+          "name": "tipo",
+          "type": "tipo_evento",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "modalidad": {
+          "name": "modalidad",
+          "type": "modalidad",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "precio_desde": {
+          "name": "precio_desde",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "organizador": {
+          "name": "organizador",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "url_oficial": {
+          "name": "url_oficial",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "imagen_url": {
+          "name": "imagen_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "imagen_alt": {
+          "name": "imagen_alt",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "destacado": {
+          "name": "destacado",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "ponentes": {
+          "name": "ponentes",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "estado": {
+          "name": "estado",
+          "type": "estado_evento",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'pendiente'"
+        },
+        "origen": {
+          "name": "origen",
+          "type": "origen_evento",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "fuente": {
+          "name": "fuente",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "url_fuente": {
+          "name": "url_fuente",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "id_externo": {
+          "name": "id_externo",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "motivo_clasificacion": {
+          "name": "motivo_clasificacion",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "creado_en": {
+          "name": "creado_en",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "actualizado_en": {
+          "name": "actualizado_en",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "eventos_estado_fecha_idx": {
+          "name": "eventos_estado_fecha_idx",
+          "columns": [
+            {
+              "expression": "estado",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "fecha",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "eventos_comunidad_idx": {
+          "name": "eventos_comunidad_idx",
+          "columns": [
+            {
+              "expression": "comunidad",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "eventos_slug_unique": {
+          "name": "eventos_slug_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "slug"
+          ]
+        },
+        "eventos_idExterno_unique": {
+          "name": "eventos_idExterno_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "id_externo"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {
+    "public.categoria": {
+      "name": "categoria",
+      "schema": "public",
+      "values": [
+        "ia",
+        "data",
+        "software",
+        "cloud",
+        "ciberseguridad",
+        "startups"
+      ]
+    },
+    "public.comunidad": {
+      "name": "comunidad",
+      "schema": "public",
+      "values": [
+        "andalucia",
+        "aragon",
+        "asturias",
+        "baleares",
+        "canarias",
+        "cantabria",
+        "castilla-la-mancha",
+        "castilla-y-leon",
+        "cataluna",
+        "ceuta",
+        "extremadura",
+        "galicia",
+        "la-rioja",
+        "madrid",
+        "melilla",
+        "murcia",
+        "navarra",
+        "pais-vasco",
+        "valencia"
+      ]
+    },
+    "public.estado_evento": {
+      "name": "estado_evento",
+      "schema": "public",
+      "values": [
+        "pendiente",
+        "aprobado",
+        "rechazado"
+      ]
+    },
+    "public.modalidad": {
+      "name": "modalidad",
+      "schema": "public",
+      "values": [
+        "presencial",
+        "online",
+        "hibrido"
+      ]
+    },
+    "public.origen_evento": {
+      "name": "origen_evento",
+      "schema": "public",
+      "values": [
+        "formulario",
+        "ia",
+        "admin"
+      ]
+    },
+    "public.tipo_evento": {
+      "name": "tipo_evento",
+      "schema": "public",
+      "values": [
+        "conferencia",
+        "meetup",
+        "hackathon",
+        "taller",
+        "otro"
+      ]
+    }
+  },
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}

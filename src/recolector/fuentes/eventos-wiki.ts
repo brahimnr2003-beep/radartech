@@ -22,6 +22,7 @@ type EventoOte = {
   organizers?: { name: string }[];
   offers?: { price?: number }[];
   source?: { url?: string };
+  image?: { url: string; alt?: string }[];
 };
 
 const MODALIDAD: Record<string, Modalidad> = {
@@ -68,6 +69,7 @@ export async function leerEventosWiki(desde: string): Promise<EventoBruto[]> {
         organizador: e.organizers?.[0]?.name,
         precioDesde: precios.length > 0 ? Math.min(...precios) : undefined,
         etiquetas: e.tags,
+        imagen: e.image?.[0],
       };
     });
 }

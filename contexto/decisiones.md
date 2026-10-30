@@ -124,6 +124,25 @@ Criterios generales: **coste cero** (planes gratuitos sin tarjeta), herramientas
 
 ## Otras decisiones
 
+### [Despliegue] — Vercel + Neon y recolector diario en GitHub Actions
+
+- **Decisión:** la web se publica en Vercel (plan Hobby) conectada a GitHub, y cada push a `main` despliega. La base de datos de producción es Neon (plan gratuito, región Frankfurt `aws-eu-central-1`) y las funciones de Vercel corren en Frankfurt (`fra1`) para estar junto a ella. El recolector se ejecuta cada día a las 05:00 UTC con GitHub Actions ([`recolector.yml`](../.github/workflows/recolector.yml)), con `DATABASE_URL` y la clave de Gemini como secretos del repositorio. Las migraciones de producción se aplican a mano con la conexión directa de Neon antes de desplegar código que las necesite. Producción nunca recibe los datos de ejemplo.
+- **Fecha:** 2026-10-30
+- **Motivo:** todo gratis y sin tarjeta; despliegue automático y recopilación sin servidor propio. GitHub Actions es gratuito sin límite de minutos en repositorios públicos.
+- **Límites a vigilar:** el plan Hobby de Vercel es solo para uso no comercial (si se monetiza, hará falta el plan Pro u otro proveedor); GitHub pausa las tareas programadas tras 60 días sin actividad en el repositorio.
+- **Alternativas descartadas:**
+  - Cron de Vercel — en Hobby se limita a ejecuciones diarias de corta duración y el recolector tarda varios minutos.
+  - Migrar automáticamente en cada despliegue — de momento hay pocas migraciones y así se controla cuándo cambia producción.
+
+### [Interfaz] — Carteles oficiales de los eventos
+
+- **Decisión:** las tarjetas y la ficha muestran el cartel oficial cuando la fuente lo da (eventos.wiki); se enlaza desde su web de origen sin copiarlo ni optimizarlo. Si no hay cartel o no carga, se muestra una portada con el icono de la categoría sobre la cuadrícula del boceto.
+- **Fecha:** 2026-10-30
+- **Motivo:** sin imagen las tarjetas quedaban vacías. Los carteles vienen de más de cien dominios distintos, así que optimizarlos con Vercel obligaría a abrir el optimizador a cualquier dominio y consumiría el cupo gratuito.
+- **Alternativas descartadas:**
+  - Solo portadas generadas — no se vería el cartel real del evento.
+  - Imagen de vista previa de agenda-tech — es una tarjeta con su propia marca, no el cartel del evento.
+
 ### [Recopilación] — Fuentes abiertas y clasificación con Gemini
 
 - **Decisión:**

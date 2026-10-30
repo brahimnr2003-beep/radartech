@@ -7,6 +7,7 @@ import {
   type Evento,
 } from "@/lib/eventos";
 import { Icon } from "./icon";
+import { PortadaEvento } from "./portada-evento";
 
 export function TarjetaEvento({ evento }: { evento: Evento }) {
   return (
@@ -18,7 +19,14 @@ export function TarjetaEvento({ evento }: { evento: Evento }) {
           : "border-line hover:border-orange-dim"
       }`}
     >
-      <div className="patron-cuadricula relative flex aspect-[16/10] items-end p-3.5">
+      <div className="relative flex aspect-[16/10] items-end overflow-hidden bg-bg-2 p-3.5">
+        <PortadaEvento
+          imagen={evento.imagen}
+          categoria={evento.categoria}
+          variante="tarjeta"
+        />
+        {/* Oscurece la parte baja del cartel para que se lea la etiqueta */}
+        <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-bg/70 via-transparent to-transparent" />
         {evento.destacado && (
           <span className="absolute top-3 right-3 z-1 rounded-full border border-orange bg-bg/70 px-[9px] py-1 font-mono text-[0.66rem] text-orange-bright">
             ★ Destacado
