@@ -86,6 +86,13 @@ automatización + inteligencia artificial + supervisión humana.
 
 La IA hace el trabajo pesado y el administrador mantiene el control sobre la calidad.
 
+**Implementación (2026-10-31)** — panel privado en `/admin`:
+
+- Acceso con **GitHub (Better Auth)**. Solo entra el email configurado en `ADMIN_EMAIL`; el registro de cualquier otra cuenta se bloquea.
+- Tres pestañas con contador: **Pendientes** (aprobar, editar, rechazar), **Publicados** (destacar, editar, ocultar) y **Descartados** (publicar si la IA se equivocó, editar). Publicados y descartados muestran solo eventos vigentes.
+- En lugar de una puntuación de relevancia se muestra el **motivo de la IA** (la frase con la que Gemini justificó la decisión), junto a categoría, ciudad, origen o fuente, organizador y email de contacto.
+- Cada acción actualiza la web pública al momento (`updateTag`).
+
 La plataforma tendrá también un formulario público:
 
 ¿Organizas un evento tecnológico?
