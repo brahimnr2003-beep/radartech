@@ -10,6 +10,7 @@ import { hoyEnEspana } from "../lib/eventos";
 import { crearSlug } from "../lib/slug";
 import {
   buscarEnInternet,
+  buscarWebOficial,
   estructurar,
   type Enfoque,
   type EventoEncontrado,
@@ -102,23 +103,45 @@ async function main() {
 
     for (const e of resultados) {
       const fin = e.fechaFin ?? e.fecha;
-      const repetido = conocidos.some(
-        (c) =>
-          sonElMismoEvento({ nombre: e.nombre, inicio: e.fecha }, c) ||
-          (c.inicio === e.fecha && dominio(c.urlOficial) === dominio(e.url)),
+      const mismoNombre = conocidos.some((c) =>
+        sonElMismoEvento({ nombre: e.nombre, inicio: e.fecha }, c),
       );
-      if (fin < hoy || repetido) {
+      if (fin < hoy || mismoNombre) {
+        repetidos++;
+        continue;
+      }
+
+      // Solo se publican fuentes primarias: si el evento salió en una agenda,
+      // se busca su web oficial (1 crédito); los que no son tech no gastan nada
+      const esTech = e.esEventoTech && e.comunidad !== null;
+      let url = e.urlOficial;
+      if (esTech && !url) {
+        url = await buscarWebOficial(e.nombre, e.fecha);
+        await esperar(1000);
+      }
+      const sinWebOficial = esTech && !url;
+      url ??= e.urlEncontrado;
+
+      if (
+        conocidos.some(
+          (c) => c.inicio === e.fecha && dominio(c.urlOficial) === dominio(url),
+        )
+      ) {
         repetidos++;
         continue;
       }
       // La IA a veces se inventa enlaces: si la página no existe, se ignora
-      if (!(await existeEnlace(e.url))) {
+      if (esTech && !sinWebOficial && !(await existeEnlace(url))) {
         console.log(`  · enlace roto, ignorado: ${e.nombre}`);
         descartados++;
         continue;
       }
 
-      const valido = e.esEventoTech && e.comunidad !== null;
+      // Sin web oficial se guarda como descartado: así no se vuelve a buscar
+      const valido = esTech && !sinWebOficial;
+      const motivo = sinWebOficial
+        ? `Sin web oficial: solo aparece en agendas como ${e.urlEncontrado}`
+        : e.motivo;
       let slug = crearSlug(e.nombre, e.fecha.slice(0, 4));
       if (slugsUsados.has(slug)) slug = `${slug}-${e.fecha}`;
       if (slugsUsados.has(slug))
@@ -142,13 +165,13 @@ async function main() {
           modalidad: e.modalidad,
           precioDesde: e.precioDesde,
           organizador: e.organizador,
-          urlOficial: e.url,
+          urlOficial: url,
           // No viene de una fuente aprobada: siempre se revisa a mano
           estado: valido ? "pendiente" : "rechazado",
           origen: "ia",
           fuente: FUENTE,
-          idExterno: `busqueda-ia:${normalizarUrl(e.url)}#${e.fecha}`,
-          motivoClasificacion: `${e.motivo} (buscando ${enfoque} en ${comunidad.nombre})`,
+          idExterno: `busqueda-ia:${normalizarUrl(url)}#${e.fecha}`,
+          motivoClasificacion: `${motivo} (buscando ${enfoque} en ${comunidad.nombre})`,
         })
         .onConflictDoNothing()
         .returning({ id: eventos.id });
@@ -163,11 +186,13 @@ async function main() {
         inicio: e.fecha,
         comunidad: e.comunidad ?? comunidad.slug,
         estado: valido ? "pendiente" : "rechazado",
-        urlOficial: e.url,
+        urlOficial: url,
       });
       if (valido) pendientes++;
       else descartados++;
-      console.log(`  ${valido ? "✓" : "·"} ${e.nombre} (${e.fecha})`);
+      console.log(
+        `  ${valido ? "✓" : sinWebOficial ? "· sin web oficial:" : "·"} ${e.nombre} (${e.fecha})`,
+      );
     }
   }
 
