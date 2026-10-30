@@ -77,3 +77,6 @@ logs/
 
 # ===== Neon (proyecto enlazado con la CLI) =====
 .neon
+
+# ===== Datos de eventos para importar (npm run importar) =====
+importaciones/

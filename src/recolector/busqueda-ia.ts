@@ -54,7 +54,15 @@ const AGREGADORES = [
   "youtube.com",
 ];
 
-const dominio = (url: string) => new URL(url).hostname.replace(/^www\./, "");
+/** Dominio sin «www.»: dos eventos el mismo día en la misma web son el mismo */
+export const dominio = (url: string) =>
+  new URL(url).hostname.replace(/^www\./, "");
+
+/** «https://www.Ejemplo.es/evento/?utm=x» → «ejemplo.es/evento» */
+export const normalizarUrl = (url: string) => {
+  const u = new URL(url);
+  return `${dominio(u.href)}${u.pathname.replace(/\/$/, "")}`.toLowerCase();
+};
 
 export const esAgregador = (url: string) =>
   AGREGADORES.some((a) => dominio(url) === a || dominio(url).endsWith(`.${a}`));
