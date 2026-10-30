@@ -133,7 +133,22 @@ async function main() {
     await esperar(4000);
   }
 
-  // 4. Métricas de la ejecución
+  // 4. Política de privacidad: el email de quien propuso un evento se borra
+  //    12 meses después de que el evento termine
+  const emailsBorrados = await db
+    .update(eventos)
+    .set({ emailContacto: null })
+    .where(
+      sql`${eventos.emailContacto} is not null and coalesce(${eventos.fechaFin}, ${eventos.fecha}) < ${desde}::date - interval '12 months'`,
+    )
+    .returning({ id: eventos.id });
+  if (emailsBorrados.length > 0) {
+    console.log(
+      `Emails de contacto caducados borrados: ${emailsBorrados.length}.`,
+    );
+  }
+
+  // 5. Métricas de la ejecución
   await db.insert(ejecucionesRecolector).values({
     inicio,
     duracionMs: Date.now() - inicio.getTime(),

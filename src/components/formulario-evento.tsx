@@ -10,6 +10,7 @@ import {
   useRef,
   type ReactNode,
 } from "react";
+import Link from "next/link";
 import { enviarEvento } from "@/app/anadir-evento/acciones";
 import { CATEGORIAS } from "@/lib/categorias";
 import { COMUNIDADES } from "@/lib/comunidades";
@@ -310,6 +311,18 @@ export function FormularioEvento({
               ? "Guardar cambios"
               : "Enviar para revisión"}
         </button>
+        {!edicion && (
+          <p className="mt-4 text-[0.8rem] text-text-faint">
+            Al enviar el formulario aceptas la{" "}
+            <Link
+              href="/privacidad"
+              className="text-text-dim underline underline-offset-2 hover:text-orange-bright"
+            >
+              política de privacidad
+            </Link>
+            . Tu email no se publica y se borra 12 meses después del evento.
+          </p>
+        )}
       </form>
     </ValoresIniciales>
   );
