@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { Compartir } from "@/components/compartir";
 import { Icon, type IconName } from "@/components/icon";
 import { Migas } from "@/components/migas";
+import { PortadaEvento } from "@/components/portada-evento";
 import { EtiquetaCategoria } from "@/components/tarjeta-evento";
 import { nombreCategoria } from "@/lib/categorias";
 import { COMUNIDADES } from "@/lib/comunidades";
@@ -69,7 +70,12 @@ export default async function PaginaEvento({
         actual={evento.nombre}
       />
       <div className="wrap">
-        <div className="patron-cuadricula relative mt-[26px] mb-8 flex aspect-[4/5] items-end overflow-hidden rounded-lg border border-line p-[18px] [--tamano-cuadricula:28px] sm:aspect-[21/8] sm:p-7">
+        <div className="relative mt-[26px] mb-8 flex aspect-[4/5] items-end overflow-hidden rounded-lg border border-line bg-bg-2 p-[18px] [--tamano-cuadricula:28px] sm:aspect-[21/8] sm:p-7">
+          <PortadaEvento
+            imagen={evento.imagen}
+            categoria={evento.categoria}
+            variante="cabecera"
+          />
           <EtiquetaCategoria>{categoria}</EtiquetaCategoria>
         </div>
 

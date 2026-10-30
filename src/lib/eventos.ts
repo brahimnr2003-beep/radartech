@@ -39,6 +39,8 @@ export type Evento = {
   urlOficial: string;
   /** Web de la que se recogió el evento, para citarla */
   fuente?: { nombre: string; url: string };
+  /** Cartel oficial del evento, si la fuente lo da */
+  imagen?: { url: string; alt: string };
   destacado: boolean;
   ponentes?: { nombre: string; cargo: string }[];
 };

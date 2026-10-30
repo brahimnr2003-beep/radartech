@@ -1,0 +1,35 @@
+name: Recolector
+
+on:
+  # Cada día a las 05:00 UTC (06:00 o 07:00 en España, según el horario)
+  schedule:
+    - cron: "0 5 * * *"
+  # Botón «Run workflow» en GitHub para lanzarlo a mano
+  workflow_dispatch:
+
+# Nunca dos ejecuciones a la vez: escribirían los mismos eventos
+concurrency:
+  group: recolector
+  cancel-in-progress: false
+
+jobs:
+  recolectar:
+    name: Recolectar eventos y clasificarlos con IA
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    # Base de datos de producción (Neon) y clave de Gemini, guardadas como secretos del repositorio
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      GOOGLE_GENERATIVE_AI_API_KEY: ${{ secrets.GOOGLE_GENERATIVE_AI_API_KEY }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+      - run: npm run recolectar

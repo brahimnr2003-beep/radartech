@@ -129,7 +129,7 @@
     animation: sweep 9s linear infinite;
   }
 
-  /* Cuadrícula de fondo de tarjetas y banners (sustituye a la imagen del evento) */
+  /* Cuadrícula de fondo de banners y de las portadas de eventos sin cartel */
   .patron-cuadricula::after {
     content: "";
     position: absolute;

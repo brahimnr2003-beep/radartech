@@ -1,6 +1,6 @@
 // Recolector de eventos: lee las fuentes aprobadas, quita repetidos, clasifica
 // con Gemini los nuevos y los guarda. Uso: npm run recolectar
-import { gte, sql } from "drizzle-orm";
+import { eq, gte, sql } from "drizzle-orm";
 import { db } from "../db";
 import { ejecucionesRecolector, eventos } from "../db/schema";
 import { hoyEnEspana } from "../lib/eventos";
@@ -60,26 +60,38 @@ async function main() {
   // 2. Descartar los que ya están en la base de datos (por id o por nombre y fecha)
   const existentes = await db
     .select({
+      id: eventos.id,
       idExterno: eventos.idExterno,
       nombre: eventos.nombre,
       fecha: eventos.fecha,
-      slug: eventos.slug,
+      imagenUrl: eventos.imagenUrl,
     })
     .from(eventos)
     .where(gte(sql`coalesce(${eventos.fechaFin}, ${eventos.fecha})`, desde));
   const slugsUsados = new Set(
     (await db.select({ slug: eventos.slug }).from(eventos)).map((e) => e.slug),
   );
-  const nuevos = unicos.filter(
-    (u) =>
-      !existentes.some(
-        (e) =>
-          e.idExterno === u.idExterno ||
-          sonElMismoEvento(u, { ...u, nombre: e.nombre, inicio: e.fecha }),
-      ),
-  );
+  const nuevos: EventoBruto[] = [];
+  let carteles = 0;
+  for (const u of unicos) {
+    const conocido = existentes.find(
+      (e) =>
+        e.idExterno === u.idExterno ||
+        sonElMismoEvento(u, { ...u, nombre: e.nombre, inicio: e.fecha }),
+    );
+    if (!conocido) {
+      nuevos.push(u);
+    } else if (!conocido.imagenUrl && u.imagen) {
+      // Si la fuente ha añadido el cartel después, se completa
+      await db
+        .update(eventos)
+        .set({ imagenUrl: u.imagen.url, imagenAlt: u.imagen.alt })
+        .where(eq(eventos.id, conocido.id));
+      carteles++;
+    }
+  }
   console.log(
-    `Leídos ${brutos.length}, únicos ${unicos.length}, nuevos ${nuevos.length}.`,
+    `Leídos ${brutos.length}, únicos ${unicos.length}, nuevos ${nuevos.length}, carteles añadidos ${carteles}.`,
   );
 
   // 3. Clasificar y guardar los nuevos
@@ -112,6 +124,8 @@ async function main() {
         precioDesde: evento.precioDesde ?? null,
         organizador: evento.organizador,
         urlOficial: evento.url,
+        imagenUrl: evento.imagen?.url,
+        imagenAlt: evento.imagen?.alt,
         // Fuentes aprobadas por el administrador: se publican directamente
         estado: valido ? "aprobado" : "rechazado",
         origen: "ia",

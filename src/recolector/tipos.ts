@@ -25,4 +25,6 @@ export type EventoBruto = {
   /** Precio mínimo en euros, si la fuente lo da */
   precioDesde?: number;
   etiquetas?: string[];
+  /** Cartel oficial del evento */
+  imagen?: { url: string; alt?: string };
 };

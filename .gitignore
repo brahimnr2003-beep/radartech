@@ -74,3 +74,6 @@ $RECYCLE.BIN/
 # ===== Logs =====
 *.log
 logs/
+
+# ===== Neon (proyecto enlazado con la CLI) =====
+.neon
