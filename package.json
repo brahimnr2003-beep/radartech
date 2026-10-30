@@ -17,7 +17,8 @@
     "db:migrate": "drizzle-kit migrate",
     "db:seed": "tsx --env-file-if-exists=.env.local src/db/seed.ts",
     "db:studio": "drizzle-kit studio",
-    "recolectar": "tsx --env-file-if-exists=.env.local src/recolector/index.ts"
+    "recolectar": "tsx --env-file-if-exists=.env.local src/recolector/index.ts",
+    "buscar": "tsx --env-file-if-exists=.env.local src/recolector/buscar.ts"
   },
   "dependencies": {
     "@ai-sdk/google": "^4.0.108",

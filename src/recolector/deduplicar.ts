@@ -24,7 +24,9 @@ function palabras(nombre: string): Set<string> {
 }
 
 /** Mismo día de inicio y nombres equivalentes (uno contiene al otro o comparten la mayoría de palabras). */
-export function sonElMismoEvento(a: EventoBruto, b: EventoBruto): boolean {
+type Comparable = Pick<EventoBruto, "nombre" | "inicio">;
+
+export function sonElMismoEvento(a: Comparable, b: Comparable): boolean {
   if (a.inicio.slice(0, 10) !== b.inicio.slice(0, 10)) return false;
   const pa = palabras(a.nombre);
   const pb = palabras(b.nombre);

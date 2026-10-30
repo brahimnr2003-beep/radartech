@@ -134,6 +134,16 @@ Criterios generales: **coste cero** (planes gratuitos sin tarjeta), herramientas
   - Cron de Vercel — en Hobby se limita a ejecuciones diarias de corta duración y el recolector tarda varios minutos.
   - Migrar automáticamente en cada despliegue — de momento hay pocas migraciones y así se controla cuándo cambia producción.
 
+### [Recopilación] — Búsqueda de eventos en internet con Tavily + Gemini
+
+- **Decisión:** para completar las comunidades con pocos eventos, Tavily (API de búsqueda para IA) busca en internet y Gemini 3.5 Flash-Lite extrae y clasifica los eventos de las páginas encontradas. Solo se aceptan enlaces que aparecen en los resultados y que responden; se descartan los ya conocidos (por nombre y fecha, o misma fecha y misma web). Todo entra como **pendiente** y se revisa en el panel, que permite aprobar y rechazar en bloque. Se ejecuta a diario tras el recolector (4 comunidades con menos eventos) y hay un modo inicial manual (19 comunidades × 3 enfoques).
+- **Fecha:** 2026-10-31
+- **Motivo:** coste cero sin tarjeta. Tavily, plan gratuito: 1.000 créditos al mes; la búsqueda avanzada gasta 2 y si se agotan deja de responder sin cobrar. Uso previsto: unos 115 créditos en la carga inicial y unos 240 al mes de mantenimiento.
+- **Alternativas descartadas:**
+  - Gemini con búsqueda de Google — en el plan gratuito solo la ofrecen los modelos 2.5, cerrados a usuarios nuevos de la API; en los modelos 3.x es de pago.
+  - Activar la facturación de Google — exige tarjeta y cobra por búsqueda y por llamada.
+  - Búsqueda básica de Tavily — devolvía la mitad de resultados útiles.
+
 ### [Analítica] — Vercel Web Analytics, sin cookies
 
 - **Decisión:** estadísticas de visitas con Vercel Web Analytics (`@vercel/analytics`), en el layout raíz. No se cuentan las visitas al panel `/admin`. Se informa en la política de privacidad (interés legítimo) y en la de cookies.

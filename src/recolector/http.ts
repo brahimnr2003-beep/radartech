@@ -20,3 +20,20 @@ export const obtenerTexto = async (url: string): Promise<string> =>
 /** Pausa entre peticiones a un mismo sitio, para no sobrecargarlo. */
 export const esperar = (ms: number) =>
   new Promise((resolve) => setTimeout(resolve, ms));
+
+/**
+ * ¿Responde la página? Descarta enlaces rotos o inventados por la IA.
+ * Algunas webs bloquean a los bots (401, 403, 429): eso cuenta como que existe.
+ */
+export async function existeEnlace(url: string): Promise<boolean> {
+  try {
+    const respuesta = await fetch(url, {
+      headers: { "User-Agent": USER_AGENT },
+      redirect: "follow",
+      signal: AbortSignal.timeout(15_000),
+    });
+    return respuesta.ok || [401, 403, 405, 429].includes(respuesta.status);
+  } catch {
+    return false;
+  }
+}

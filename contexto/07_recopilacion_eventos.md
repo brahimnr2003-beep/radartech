@@ -65,6 +65,8 @@ Fuentes aprobadas:
 
 Reglas del recolector: respetar `robots.txt` y las condiciones de cada web, identificarse, pausar entre peticiones, guardar solo datos y un resumen propio (no textos completos ni imágenes) y citar siempre la fuente con su licencia. Descartadas: Meetup y Eventbrite (sus condiciones prohíben el scraping) y dev.events (no indica si permite reutilizar su contenido).
 
+**Búsqueda en internet (2026-10-31).** Para cubrir las comunidades con pocos eventos, cada día se buscan eventos de las 4 comunidades con menos eventos (`npm run buscar`); una vez se hace una carga inicial de toda España (`npm run buscar -- --inicial`). Tavily devuelve páginas reales y Gemini extrae los eventos con fecha futura. Los resultados **no** vienen de una fuente aprobada, así que entran siempre como **pendientes** con el origen «Búsqueda IA». Se descartan antes los enlaces que no aparecen en la búsqueda o no responden y los eventos ya conocidos.
+
 Existirá un panel de administración con eventos pendientes.
 
 Por ejemplo:
