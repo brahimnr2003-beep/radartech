@@ -73,6 +73,8 @@ export const eventos = pgTable(
     idExterno: text().unique(),
     /** Por qué la IA lo publicó o descartó (se mostrará en el panel) */
     motivoClasificacion: text(),
+    /** Email de quien lo envió por el formulario; solo lo ve el administrador */
+    emailContacto: text(),
     creadoEn: timestamp({ withTimezone: true }).notNull().defaultNow(),
     actualizadoEn: timestamp({ withTimezone: true })
       .notNull()
