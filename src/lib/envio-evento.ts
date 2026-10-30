@@ -28,38 +28,50 @@ const enlace = z
 
 const elegir = (mensaje: string) => ({ error: mensaje });
 
-export const esquemaEnvio = z
-  .object({
-    nombre: texto(150),
-    descripcion: texto(2000).refine((d) => d.length >= 30, {
-      message: "Cuéntanos algo más: al menos 30 caracteres",
-    }),
-    fecha: z.iso.date("Elige la fecha del evento"),
-    fechaFin: opcional(z.iso.date("Fecha no válida")),
-    hora: opcional(z.iso.time({ precision: -1, error: "Hora no válida" })),
-    comunidad: z.enum(valores(COMUNIDADES), elegir("Elige una comunidad")),
-    provincia: texto(60),
-    ciudad: texto(80),
-    lugar: opcional(texto(150)),
-    categoria: z.enum(valores(CATEGORIAS), elegir("Elige una categoría")),
-    tipo: z.enum(TIPOS_EVENTO_VALORES, elegir("Elige el tipo de evento")),
-    modalidad: z.enum(MODALIDADES_VALORES, elegir("Elige la modalidad")),
-    precioDesde: opcional(
-      z.coerce
-        .number("Escribe un número")
-        .int("Sin decimales")
-        .min(0, "No puede ser negativo")
-        .max(10_000, "Revisa el precio"),
-    ),
-    urlOficial: enlace,
-    imagenUrl: opcional(enlace),
-    organizador: texto(120),
-    email: z.email("Escribe un email válido").max(200),
+const campos = z.object({
+  nombre: texto(150),
+  descripcion: texto(2000).refine((d) => d.length >= 30, {
+    message: "Cuéntanos algo más: al menos 30 caracteres",
+  }),
+  fecha: z.iso.date("Elige la fecha del evento"),
+  fechaFin: opcional(z.iso.date("Fecha no válida")),
+  hora: opcional(z.iso.time({ precision: -1, error: "Hora no válida" })),
+  comunidad: z.enum(valores(COMUNIDADES), elegir("Elige una comunidad")),
+  provincia: texto(60),
+  ciudad: texto(80),
+  lugar: opcional(texto(150)),
+  categoria: z.enum(valores(CATEGORIAS), elegir("Elige una categoría")),
+  tipo: z.enum(TIPOS_EVENTO_VALORES, elegir("Elige el tipo de evento")),
+  modalidad: z.enum(MODALIDADES_VALORES, elegir("Elige la modalidad")),
+  precioDesde: opcional(
+    z.coerce
+      .number("Escribe un número")
+      .int("Sin decimales")
+      .min(0, "No puede ser negativo")
+      .max(10_000, "Revisa el precio"),
+  ),
+  urlOficial: enlace,
+  imagenUrl: opcional(enlace),
+  organizador: texto(120),
+  email: z.email("Escribe un email válido").max(200),
+});
+
+const finTrasInicio = (e: { fecha: string; fechaFin?: string }) =>
+  !e.fechaFin || e.fechaFin >= e.fecha;
+const errorFin = {
+  path: ["fechaFin"],
+  message: "Debe ser igual o posterior a la fecha de inicio",
+};
+
+export const esquemaEnvio = campos.refine(finTrasInicio, errorFin);
+
+/** Edición desde el panel: los eventos del recolector pueden no tener organizador ni email. */
+export const esquemaEdicion = campos
+  .extend({
+    organizador: opcional(texto(120)),
+    email: opcional(z.email("Escribe un email válido").max(200)),
   })
-  .refine((e) => !e.fechaFin || e.fechaFin >= e.fecha, {
-    path: ["fechaFin"],
-    message: "Debe ser igual o posterior a la fecha de inicio",
-  });
+  .refine(finTrasInicio, errorFin);
 
 export type EnvioEvento = z.infer<typeof esquemaEnvio>;
 export type CampoEnvio = keyof EnvioEvento;

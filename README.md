@@ -26,7 +26,7 @@ Hoy esa información está dispersa entre webs de empresas, universidades, asoci
 | Stack tecnológico | ✅ Decidido ([`decisiones.md`](contexto/decisiones.md)) |
 | Web pública con eventos reales | ✅ Publicada en Vercel + Neon |
 | Recopilación diaria con IA | ✅ GitHub Actions + Gemini |
-| Formulario y panel de administración | 🚧 En curso |
+| Formulario para organizadores y panel de administración | ✅ Con login de GitHub (Better Auth) |
 
 ### Funcionalidades
 
@@ -34,13 +34,13 @@ Hoy esa información está dispersa entre webs de empresas, universidades, asoci
 - **Página por comunidad y de todos los eventos:** destacados primero, tarjetas con el cartel oficial y filtros (fecha, comunidad, ubicación, categoría, modalidad, precio, tipo).
 - **Ficha de evento** con enlace a la web oficial y cita de la fuente.
 - **Recopilación automática con IA:** cada día se leen agendas abiertas (eventos.wiki, agenda-tech, confs.tech), se eliminan duplicados y Gemini decide si cada evento es tech y lo clasifica.
-- **Supervisión humana** *(en desarrollo)*: los eventos de otras vías pasan por un panel de administración (aprobar / editar / rechazar) antes de publicarse.
-- **Formulario para organizadores** *(en desarrollo)* que quieran publicar su evento.
+- **Formulario para organizadores** con validación en el servidor y anti-spam sin cuentas.
+- **Supervisión humana:** panel de administración privado (aprobar / editar / rechazar, ocultar, destacar y recuperar descartados) con el motivo de la IA en cada evento.
 - **Seis categorías:** IA · Data · Software · Cloud & DevOps · Ciberseguridad · Startups & Negocio.
 
 ### Stack
 
-Next.js 16 (App Router, Cache Components) · TypeScript · Tailwind CSS 4 · PostgreSQL (Neon) + Drizzle ORM · Vercel AI SDK + Gemini · Vitest · ESLint + Prettier · GitHub Actions · Vercel.
+Next.js 16 (App Router, Cache Components, Server Actions) · TypeScript · Tailwind CSS 4 · PostgreSQL (Neon) + Drizzle ORM · Better Auth · Vercel AI SDK + Gemini · Zod · Vitest · ESLint + Prettier · GitHub Actions · Vercel.
 
 ### Cómo ejecutarlo en local
 
@@ -99,7 +99,7 @@ That information is currently scattered across company, university and community
 | Tech stack | ✅ Decided ([`decisiones.md`](contexto/decisiones.md), in Spanish) |
 | Public website with real events | ✅ Live on Vercel + Neon |
 | Daily AI-powered collection | ✅ GitHub Actions + Gemini |
-| Submission form and admin panel | 🚧 In progress |
+| Submission form and admin panel | ✅ With GitHub login (Better Auth) |
 
 ### Features
 
@@ -107,13 +107,13 @@ That information is currently scattered across company, university and community
 - **Region page and all-events page:** featured events first, cards with the official poster and filters (date, region, location, category, format, price, type).
 - **Event page** linking to the official website and citing the source.
 - **AI-powered event collection:** every day open event listings (eventos.wiki, agenda-tech, confs.tech) are read, duplicates removed and Gemini decides whether each event is tech and classifies it.
-- **Human in the loop** *(in progress)*: events from other channels go through an admin panel (approve / edit / reject) before going live.
-- **Submission form** *(in progress)* for event organisers.
+- **Submission form** for event organisers, with server-side validation and account-free spam protection.
+- **Human in the loop:** private admin panel (approve / edit / reject, hide, feature and restore discarded events) showing the AI's reasoning for each event.
 - **Six categories:** AI · Data · Software · Cloud & DevOps · Cybersecurity · Startups & Business.
 
 ### Stack
 
-Next.js 16 (App Router, Cache Components) · TypeScript · Tailwind CSS 4 · PostgreSQL (Neon) + Drizzle ORM · Vercel AI SDK + Gemini · Vitest · ESLint + Prettier · GitHub Actions · Vercel.
+Next.js 16 (App Router, Cache Components, Server Actions) · TypeScript · Tailwind CSS 4 · PostgreSQL (Neon) + Drizzle ORM · Better Auth · Vercel AI SDK + Gemini · Zod · Vitest · ESLint + Prettier · GitHub Actions · Vercel.
 
 ### Running locally
 

@@ -32,6 +32,8 @@ jobs:
 
     env:
       DATABASE_URL: postgres://radartech:radartech@localhost:5432/radartech
+      # Better Auth exige un secreto; este solo vale para la CI
+      BETTER_AUTH_SECRET: secreto-solo-para-la-ci-no-se-usa-en-produccion
 
     steps:
       - uses: actions/checkout@v7
