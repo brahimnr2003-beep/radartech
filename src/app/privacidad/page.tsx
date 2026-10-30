@@ -16,8 +16,8 @@ export default function PaginaPrivacidad() {
       <p>
         RadarTech es un proyecto personal, gratuito y sin ánimo de lucro para
         descubrir eventos tecnológicos en España. Recogemos los mínimos datos
-        personales posibles: no hay cuentas de usuario, ni analítica, ni
-        publicidad.
+        personales posibles: no hay cuentas de usuario, ni publicidad, ni
+        cookies de seguimiento.
       </p>
 
       <h2>Responsable</h2>
@@ -46,6 +46,13 @@ export default function PaginaPrivacidad() {
           registra datos básicos de cada visita (dirección IP, navegador, página
           solicitada) para mantener la web funcionando y segura.
         </li>
+        <li>
+          <strong>Estadísticas de visitas.</strong> Usamos Vercel Web Analytics
+          para saber cuántas personas visitan la web, qué páginas ven, desde qué
+          país, con qué tipo de dispositivo y de qué web llegan. No usa cookies
+          ni identifica a nadie: los datos son agregados y anónimos, y las
+          visitas no se pueden relacionar entre días distintos.
+        </li>
       </ul>
       <p>
         Los eventos que publicamos se recopilan de agendas públicas que permiten
@@ -59,9 +66,9 @@ export default function PaginaPrivacidad() {
           enviarlo (art. 6.1.a RGPD). Puedes retirarlo cuando quieras.
         </li>
         <li>
-          Seguridad de la web y acceso al panel:{" "}
-          <strong>interés legítimo</strong> en mantener el servicio protegido
-          (art. 6.1.f RGPD).
+          Seguridad de la web, acceso al panel y estadísticas anónimas de
+          visitas: <strong>interés legítimo</strong> en mantener el servicio
+          protegido y saber cómo se usa para mejorarlo (art. 6.1.f RGPD).
         </li>
       </ul>
 
@@ -80,9 +87,10 @@ export default function PaginaPrivacidad() {
       </p>
       <ul>
         <li>
-          <strong>Vercel Inc.</strong> (alojamiento web, Estados Unidos), con
-          las garantías del Marco de Privacidad de Datos UE-EE. UU. y las
-          cláusulas contractuales tipo de la Comisión Europea.
+          <strong>Vercel Inc.</strong> (alojamiento web y estadísticas de
+          visitas, Estados Unidos), con las garantías del Marco de Privacidad de
+          Datos UE-EE. UU. y las cláusulas contractuales tipo de la Comisión
+          Europea.
         </li>
         <li>
           <strong>Neon</strong> (base de datos), con los datos guardados en

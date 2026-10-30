@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono, Space_Grotesk } from "next/font/google";
+import { Suspense } from "react";
+import { Estadisticas } from "@/components/estadisticas";
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
 import "./globals.css";
@@ -35,6 +37,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <Header />
         <main className="flex flex-1 flex-col">{children}</main>
         <Footer />
+        <Suspense>
+          <Estadisticas />
+        </Suspense>
       </body>
     </html>
   );
