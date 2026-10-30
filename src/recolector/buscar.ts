@@ -11,6 +11,8 @@ import { crearSlug } from "../lib/slug";
 import {
   buscarEnInternet,
   buscarWebOficial,
+  dominio,
+  normalizarUrl,
   estructurar,
   type Enfoque,
   type EventoEncontrado,
@@ -22,15 +24,6 @@ const FUENTE = "Búsqueda IA";
 const COMUNIDADES_MANTENIMIENTO = 4;
 /** Margen entre llamadas para no superar el límite por minuto del plan gratuito */
 const PAUSA_MS = 4000;
-
-/** «https://www.Ejemplo.es/evento/?utm=x» → «ejemplo.es/evento» */
-const normalizarUrl = (url: string) => {
-  const u = new URL(url);
-  return `${u.hostname.replace(/^www\./, "")}${u.pathname.replace(/\/$/, "")}`.toLowerCase();
-};
-
-/** Dominio sin «www.»: dos eventos el mismo día en la misma web son el mismo */
-const dominio = (url: string) => new URL(url).hostname.replace(/^www\./, "");
 
 async function main() {
   if (!process.env.TAVILY_API_KEY) {

@@ -67,6 +67,10 @@ Reglas del recolector: respetar `robots.txt` y las condiciones de cada web, iden
 
 **Búsqueda en internet (2026-10-31).** Para cubrir las comunidades con pocos eventos, cada día se buscan eventos de las 4 comunidades con menos eventos (`npm run buscar`); una vez se hace una carga inicial de toda España (`npm run buscar -- --inicial`). Tavily devuelve páginas reales y Gemini extrae los eventos con fecha futura. Los resultados **no** vienen de una fuente aprobada, así que entran siempre como **pendientes** con el origen «Búsqueda IA». Se descartan antes los enlaces que no aparecen en la búsqueda o no responden y los eventos ya conocidos.
 
+**Fuentes primarias (2026-10-31).** Solo se publica la web propia del evento o de su organizador. Las agendas, calendarios, noticias, redes sociales y plataformas de entradas (Eventbrite, Meetup, Luma, Devpost) sirven para descubrir eventos, pero no como enlace: si un evento solo aparece en ellas, se busca su web oficial y, si no la tiene, se descarta.
+
+**Importación manual (2026-10-31).** Los grandes eventos con varias sedes en España (NASA Space Apps, DevFest, Startup Weekend…) y las comunidades con poca cobertura se investigan aparte y se importan desde JSON con `npm run importar -- archivo.json`. El script valida cada campo, exige web oficial que responda, descarta repetidos (distinguiendo sedes por ciudad) y guarda todo como pendiente con la fuente «Investigación manual».
+
 Existirá un panel de administración con eventos pendientes.
 
 Por ejemplo:
