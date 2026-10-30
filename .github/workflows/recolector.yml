@@ -6,6 +6,14 @@ on:
     - cron: "0 5 * * *"
   # Botón «Run workflow» en GitHub para lanzarlo a mano
   workflow_dispatch:
+    inputs:
+      busqueda:
+        description: "Búsqueda de eventos en internet"
+        type: choice
+        options:
+          - mantenimiento
+          - inicial
+        default: mantenimiento
 
 # Nunca dos ejecuciones a la vez: escribirían los mismos eventos
 concurrency:
@@ -16,12 +24,13 @@ jobs:
   recolectar:
     name: Recolectar eventos y clasificarlos con IA
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 45
 
-    # Base de datos de producción (Neon) y clave de Gemini, guardadas como secretos del repositorio
+    # Base de datos de producción (Neon) y claves de Gemini y Tavily, guardadas como secretos del repositorio
     env:
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
       GOOGLE_GENERATIVE_AI_API_KEY: ${{ secrets.GOOGLE_GENERATIVE_AI_API_KEY }}
+      TAVILY_API_KEY: ${{ secrets.TAVILY_API_KEY }}
 
     steps:
       - uses: actions/checkout@v7
@@ -32,4 +41,10 @@ jobs:
           cache: npm
 
       - run: npm ci
+
+      # Fuentes aprobadas: se publican directamente
       - run: npm run recolectar
+
+      # Búsqueda en internet: todo entra como pendiente de revisión
+      - name: npm run buscar
+        run: npm run buscar -- ${{ inputs.busqueda == 'inicial' && '--inicial' || '' }}

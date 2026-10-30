@@ -66,7 +66,7 @@ async function main() {
     const conocido = existentes.find(
       (e) =>
         e.idExterno === u.idExterno ||
-        sonElMismoEvento(u, { ...u, nombre: e.nombre, inicio: e.fecha }),
+        sonElMismoEvento(u, { nombre: e.nombre, inicio: e.fecha }),
     );
     if (!conocido) {
       nuevos.push(u);

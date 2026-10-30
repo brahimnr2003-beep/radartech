@@ -1,6 +1,6 @@
 "use server";
 
-import { eq, not } from "drizzle-orm";
+import { eq, inArray, not } from "drizzle-orm";
 import { updateTag } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
@@ -20,6 +20,18 @@ export async function cambiarEstado(id: number, estado: Estado) {
     .set({ estado: z.enum(eventos.estado.enumValues).parse(estado) })
     .where(eq(eventos.id, z.number().int().parse(id)));
   // La web pública se actualiza al momento
+  updateTag(TAG_EVENTOS);
+}
+
+/** Lo mismo para todos los eventos marcados con las casillas del panel. */
+export async function cambiarEstadoVarios(estado: Estado, formData: FormData) {
+  await exigirAdministrador();
+  const ids = z.array(z.coerce.number().int()).parse(formData.getAll("ids"));
+  if (ids.length === 0) return;
+  await db
+    .update(eventos)
+    .set({ estado: z.enum(eventos.estado.enumValues).parse(estado) })
+    .where(inArray(eventos.id, ids));
   updateTag(TAG_EVENTOS);
 }
 

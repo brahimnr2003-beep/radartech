@@ -1,7 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
-import { alternarDestacado, cambiarEstado } from "@/app/admin/acciones";
+import {
+  alternarDestacado,
+  cambiarEstado,
+  cambiarEstadoVarios,
+} from "@/app/admin/acciones";
+import { SeleccionarTodos } from "@/components/admin/seleccionar-todos";
 import { CerrarSesion, EntrarConGitHub } from "@/components/admin/sesion-admin";
 import { getAdministrador } from "@/lib/auth";
 import { nombreCategoria } from "@/lib/categorias";
@@ -18,6 +23,23 @@ import type { FilaEvento } from "@/db/schema";
 export const metadata: Metadata = {
   title: "Panel de administración — RadarTech",
   robots: { index: false, follow: false },
+};
+
+/** Id del formulario de acciones en bloque. */
+const SELECCION = "seleccion";
+
+const ACCIONES_EN_BLOQUE: Record<
+  EstadoEvento,
+  { texto: string; destino: EstadoEvento; principal?: boolean }[]
+> = {
+  pendiente: [
+    { texto: "Aprobar seleccionados", destino: "aprobado", principal: true },
+    { texto: "Rechazar seleccionados", destino: "rechazado" },
+  ],
+  aprobado: [{ texto: "Ocultar seleccionados", destino: "rechazado" }],
+  rechazado: [
+    { texto: "Publicar seleccionados", destino: "aprobado", principal: true },
+  ],
 };
 
 const PESTANAS: Record<EstadoEvento, string> = {
@@ -108,11 +130,31 @@ async function Panel({
       {lista.length === 0 ? (
         <p className="text-text-dim">No hay eventos en esta lista.</p>
       ) : (
-        <ul className="flex flex-col gap-4">
-          {lista.map((evento) => (
-            <FilaAdmin key={evento.id} evento={evento} />
-          ))}
-        </ul>
+        <>
+          {/* Acciones en bloque: las casillas de cada evento apuntan a este formulario */}
+          <form
+            id={SELECCION}
+            className="sticky top-[72px] z-10 mb-5 flex flex-wrap items-center gap-3 rounded-md border border-line bg-bg/90 px-4 py-3 backdrop-blur-md"
+          >
+            <SeleccionarTodos formulario={SELECCION} />
+            <span className="mr-auto" />
+            {ACCIONES_EN_BLOQUE[estado].map(({ texto, destino, principal }) => (
+              <button
+                key={destino}
+                type="submit"
+                formAction={cambiarEstadoVarios.bind(null, destino)}
+                className={`btn px-4 py-2.5 text-[0.76rem] ${principal ? "btn-primary" : "btn-ghost"}`}
+              >
+                {texto}
+              </button>
+            ))}
+          </form>
+          <ul className="flex flex-col gap-4">
+            {lista.map((evento) => (
+              <FilaAdmin key={evento.id} evento={evento} />
+            ))}
+          </ul>
+        </>
       )}
     </>
   );
@@ -142,6 +184,14 @@ function FilaAdmin({ evento }: { evento: FilaEvento }) {
       }`}
     >
       <div className="flex flex-wrap items-start justify-between gap-x-6 gap-y-3">
+        <input
+          type="checkbox"
+          name="ids"
+          value={evento.id}
+          form={SELECCION}
+          aria-label={`Seleccionar ${evento.nombre}`}
+          className="mt-1.5 size-4 flex-none accent-orange"
+        />
         <div className="min-w-0 flex-1">
           <h2 className="text-[1.1rem] leading-snug">
             {evento.destacado && (
