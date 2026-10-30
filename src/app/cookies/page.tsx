@@ -42,6 +42,11 @@ export default function PaginaCookies() {
         ninguna cookie en tu navegador.
       </p>
 
+      <p>
+        Las estadísticas de visitas (Vercel Web Analytics) funcionan sin cookies
+        ni almacenamiento en tu navegador.
+      </p>
+
       <h2>Contenido de otras webs</h2>
       <p>
         Los carteles de los eventos se cargan desde la web de cada organizador.

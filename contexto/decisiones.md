@@ -134,6 +134,15 @@ Criterios generales: **coste cero** (planes gratuitos sin tarjeta), herramientas
   - Cron de Vercel — en Hobby se limita a ejecuciones diarias de corta duración y el recolector tarda varios minutos.
   - Migrar automáticamente en cada despliegue — de momento hay pocas migraciones y así se controla cuándo cambia producción.
 
+### [Analítica] — Vercel Web Analytics, sin cookies
+
+- **Decisión:** estadísticas de visitas con Vercel Web Analytics (`@vercel/analytics`), en el layout raíz. No se cuentan las visitas al panel `/admin`. Se informa en la política de privacidad (interés legítimo) y en la de cookies.
+- **Fecha:** 2026-10-31
+- **Motivo:** el propietario quiere ver las estadísticas de la web. Funciona sin cookies, así que no hace falta banner de consentimiento, y está integrado en el hosting que ya usamos. Plan Hobby: 50.000 eventos al mes incluidos; si se superan, deja de recoger datos durante unos días, pero nunca cobra. Solo guarda el último mes de datos.
+- **Alternativas descartadas:**
+  - Google Analytics — usa cookies y obliga a mostrar un banner de consentimiento.
+  - Analítica propia en la base de datos — más trabajo sin aportar nada en esta fase.
+
 ### [Interfaz] — Carteles oficiales de los eventos
 
 - **Decisión:** las tarjetas y la ficha muestran el cartel oficial cuando la fuente lo da (eventos.wiki); se enlaza desde su web de origen sin copiarlo ni optimizarlo. Si no hay cartel o no carga, se muestra una portada con el icono de la categoría sobre la cuadrícula del boceto.
