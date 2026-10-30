@@ -17,13 +17,13 @@ on:
 
 # Nunca dos ejecuciones a la vez: escribirían los mismos eventos
 concurrency:
-  group: recolector
+  group: recolector-produccion
   cancel-in-progress: false
 
 jobs:
   recolectar:
     name: Recolectar eventos y clasificarlos con IA
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 45
 
     # Base de datos de producción (Neon) y claves de Gemini y Tavily, guardadas como secretos del repositorio
