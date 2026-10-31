@@ -93,8 +93,15 @@ export default async function Home() {
             eyebrow="Todas las comunidades · Actualizado en vivo"
             titulo="Elige dónde quieres mirar."
           >
-            Pasa el cursor sobre una comunidad para ver cuántos eventos hay
-            programados. Haz clic para explorarlos en detalle.
+            {/* En pantallas táctiles no hay cursor: se toca directamente */}
+            <span className="pointer-coarse:hidden">
+              Pasa el cursor sobre una comunidad para ver cuántos eventos hay
+              programados. Haz clic para explorarlos en detalle.
+            </span>
+            <span className="hidden pointer-coarse:inline">
+              Toca una comunidad para ver sus eventos. Debajo tienes todas
+              ordenadas por actividad.
+            </span>
           </SectionHead>
           <div className="grid items-start gap-10 min-[941px]:grid-cols-[1fr_300px]">
             <div className="relative overflow-hidden rounded-lg border border-line bg-bg-1 bg-[radial-gradient(circle_at_30%_20%,rgba(255,106,26,0.05),transparent_55%)] p-5">

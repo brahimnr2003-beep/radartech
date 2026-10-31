@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Logo } from "./logo";
+import { MenuMovil } from "./menu-movil";
 
 const NAV_LINKS = [
   { href: "/#mapa", label: "Mapa" },
@@ -25,13 +26,16 @@ export function Header() {
             </li>
           ))}
         </ul>
-        <Link
-          href="/anadir-evento"
-          className="btn btn-ghost px-[18px] py-2.5 text-[0.75rem]"
-        >
-          <span className="max-[520px]:hidden">Publica tu evento</span>
-          <span className="min-[521px]:hidden">Publicar</span>
-        </Link>
+        <div className="flex items-center gap-2.5">
+          <Link
+            href="/anadir-evento"
+            className="btn btn-ghost px-[18px] py-2.5 text-[0.75rem]"
+          >
+            <span className="max-[520px]:hidden">Publica tu evento</span>
+            <span className="min-[521px]:hidden">Publicar</span>
+          </Link>
+          <MenuMovil enlaces={NAV_LINKS} />
+        </div>
       </nav>
     </header>
   );

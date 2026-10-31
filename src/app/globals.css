@@ -48,6 +48,9 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    /* Barras de desplazamiento y controles nativos en versión oscura */
+    color-scheme: dark;
+    scrollbar-color: var(--color-line-strong) transparent;
   }
 
   @media (prefers-reduced-motion: reduce) {
