@@ -134,6 +134,15 @@ Criterios generales: **coste cero** (planes gratuitos sin tarjeta), herramientas
   - Cron de Vercel — en Hobby se limita a ejecuciones diarias de corta duración y el recolector tarda varios minutos.
   - Migrar automáticamente en cada despliegue — de momento hay pocas migraciones y así se controla cuándo cambia producción.
 
+### [SEO] — SEO técnico sin dependencias ni cookies
+
+- **Decisión:** metadatos con plantilla de títulos y enlace canónico por página (los filtros en la URL no generan duplicados); `sitemap.xml` y `robots.txt` generados por Next (el panel y la API quedan fuera); datos estructurados schema.org `Event` en cada ficha y `WebSite` en la portada; imágenes para compartir (Open Graph) generadas con `next/og` en el estilo de la web, una general y otra por evento. La URL pública sale de `VERCEL_PROJECT_PRODUCTION_URL`.
+- **Fecha:** 2026-10-31
+- **Motivo:** que Google indexe y muestre los eventos con fecha y lugar, y que los enlaces se vean bien al compartirlos. Todo con herramientas de Next, sin librerías nuevas. Las imágenes usan Space Grotesk y JetBrains Mono (licencia OFL, con su texto en `src/assets/fuentes/`).
+- **Alternativas descartadas:**
+  - Cartel del evento como imagen al compartir — muchos eventos no tienen cartel y viene de webs de terceros.
+  - Librería `schema-dts` para tipar el JSON-LD — no compensa una dependencia para dos objetos; se cubre con tests.
+
 ### [Recopilación] — Búsqueda de eventos en internet con Tavily + Gemini
 
 - **Decisión:** para completar las comunidades con pocos eventos, Tavily (API de búsqueda para IA) busca en internet y Gemini 3.5 Flash-Lite extrae y clasifica los eventos de las páginas encontradas. Solo se aceptan enlaces que aparecen en los resultados y que responden; se descartan los ya conocidos (por nombre y fecha, o misma fecha y misma web). Todo entra como **pendiente** y se revisa en el panel, que permite aprobar y rechazar en bloque. Se ejecuta a diario tras el recolector (4 comunidades con menos eventos) y hay un modo inicial manual (19 comunidades × 3 enfoques).

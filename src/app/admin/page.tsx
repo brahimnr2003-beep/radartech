@@ -21,7 +21,7 @@ import { TIPOS_EVENTO, formatearFechas, formatearPrecio } from "@/lib/eventos";
 import type { FilaEvento } from "@/db/schema";
 
 export const metadata: Metadata = {
-  title: "Panel de administración — RadarTech",
+  title: "Panel de administración",
   robots: { index: false, follow: false },
 };
 

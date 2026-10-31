@@ -8,7 +8,7 @@ import { getAdministrador } from "@/lib/auth";
 import { getEventoAdmin } from "@/lib/consultas-admin";
 
 export const metadata: Metadata = {
-  title: "Editar evento — RadarTech",
+  title: "Editar evento",
   robots: { index: false, follow: false },
 };
 
