@@ -23,7 +23,8 @@ export async function generateMetadata({
   const comunidad = buscarComunidad((await params).comunidad);
   if (!comunidad) return {};
   return {
-    title: `Eventos tecnológicos en ${comunidad.nombre} — RadarTech`,
+    title: `Eventos tecnológicos en ${comunidad.nombre}`,
+    alternates: { canonical: `/eventos/${comunidad.slug}` },
     description: `Próximos eventos tecnológicos en ${comunidad.nombre}: conferencias, meetups, hackathons, IA, Data, Startups, Ciberseguridad y más.`,
   };
 }

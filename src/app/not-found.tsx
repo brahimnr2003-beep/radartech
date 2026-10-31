@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Página no encontrada — RadarTech",
+  title: "Página no encontrada",
 };
 
 export default function NotFound() {

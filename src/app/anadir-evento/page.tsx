@@ -3,7 +3,8 @@ import { FormularioEvento } from "@/components/formulario-evento";
 import { Icon } from "@/components/icon";
 
 export const metadata: Metadata = {
-  title: "Añadir evento — RadarTech",
+  title: "Añadir evento",
+  alternates: { canonical: "/anadir-evento" },
   description:
     "¿Organizas un evento tecnológico en España? Añádelo a la agenda de RadarTech.",
 };

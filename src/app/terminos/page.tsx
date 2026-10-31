@@ -4,7 +4,8 @@ import { PaginaLegal } from "@/components/pagina-legal";
 import { EMAIL_CONTACTO, TITULAR } from "@/lib/proyecto";
 
 export const metadata: Metadata = {
-  title: "Términos de uso — RadarTech",
+  title: "Términos de uso",
+  alternates: { canonical: "/terminos" },
   description:
     "Condiciones de uso de RadarTech y de la información que publica.",
 };

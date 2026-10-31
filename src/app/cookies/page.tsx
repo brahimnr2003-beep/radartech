@@ -3,7 +3,8 @@ import Link from "next/link";
 import { PaginaLegal } from "@/components/pagina-legal";
 
 export const metadata: Metadata = {
-  title: "Política de cookies — RadarTech",
+  title: "Política de cookies",
+  alternates: { canonical: "/cookies" },
   description: "RadarTech no usa cookies de análisis ni de publicidad.",
 };
 

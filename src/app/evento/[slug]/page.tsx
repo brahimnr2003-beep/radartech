@@ -9,6 +9,7 @@ import { nombreCategoria } from "@/lib/categorias";
 import { COMUNIDADES } from "@/lib/comunidades";
 import { getEvento, getSlugsEventos } from "@/lib/consultas";
 import { MODALIDADES, formatearFechas, formatearPrecio } from "@/lib/eventos";
+import { datosEstructuradosEvento, jsonLd } from "@/lib/seo";
 
 export async function generateStaticParams() {
   const slugs = await getSlugsEventos();
@@ -25,8 +26,9 @@ export async function generateMetadata({
   const evento = await getEvento((await params).slug);
   if (!evento) return {};
   return {
-    title: `${evento.nombre} — RadarTech`,
+    title: evento.nombre,
     description: evento.descripcion,
+    alternates: { canonical: `/evento/${evento.slug}` },
   };
 }
 
@@ -62,6 +64,12 @@ export default async function PaginaEvento({
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: jsonLd(datosEstructuradosEvento(evento)),
+        }}
+      />
       <Migas
         enlaces={[
           { href: "/", texto: "España" },

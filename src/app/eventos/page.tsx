@@ -8,7 +8,8 @@ import { Migas } from "@/components/migas";
 import { getEventos } from "@/lib/consultas";
 
 export const metadata: Metadata = {
-  title: "Todos los eventos tecnológicos de España — RadarTech",
+  title: "Todos los eventos tecnológicos de España",
+  alternates: { canonical: "/eventos" },
   description:
     "Todos los próximos eventos tecnológicos de España en un solo listado: filtra por comunidad, ubicación, fecha, categoría, modalidad, precio y tipo de evento.",
 };

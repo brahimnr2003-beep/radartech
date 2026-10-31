@@ -1,9 +1,15 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Icon } from "@/components/icon";
 import { MapaEspana } from "@/components/mapa/mapa-espana";
 import { CATEGORIAS } from "@/lib/categorias";
 import { COMUNIDADES } from "@/lib/comunidades";
 import { contarEventosPorComunidad } from "@/lib/consultas";
+import { datosEstructuradosWeb, jsonLd } from "@/lib/seo";
+
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+};
 
 const PASOS = [
   {
@@ -35,6 +41,10 @@ export default async function Home() {
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLd(datosEstructuradosWeb()) }}
+      />
       <section className="relative overflow-hidden pt-[100px] pb-[70px]">
         <div className="hero-rings" />
         <div className="hero-sweep" />

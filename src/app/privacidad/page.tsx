@@ -4,7 +4,8 @@ import { PaginaLegal } from "@/components/pagina-legal";
 import { EMAIL_CONTACTO, TITULAR } from "@/lib/proyecto";
 
 export const metadata: Metadata = {
-  title: "Política de privacidad — RadarTech",
+  title: "Política de privacidad",
+  alternates: { canonical: "/privacidad" },
   description:
     "Qué datos personales trata RadarTech, para qué y cómo ejercer tus derechos.",
 };
