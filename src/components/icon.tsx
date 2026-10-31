@@ -53,6 +53,9 @@ const ICONS = {
       <path d="m8.2 10.8 7.6-4.6M8.2 13.2l7.6 4.6" />
     </>
   ),
+  menu: <path d="M4 7h16M4 12h16M4 17h16" />,
+  cerrar: <path d="M6 6l12 12M18 6 6 18" />,
+  filtros: <path d="M4 6h16M7 12h10M10 18h4" />,
   info: (
     <>
       <circle cx="12" cy="12" r="9" />
