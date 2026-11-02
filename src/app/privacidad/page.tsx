@@ -54,6 +54,13 @@ export default function PaginaPrivacidad() {
           ni identifica a nadie: los datos son agregados y anónimos, y las
           visitas no se pueden relacionar entre días distintos.
         </li>
+        <li>
+          <strong>Informes de errores.</strong> Si algo falla, se envía un
+          informe técnico (el error, la página en la que ocurrió y el tipo de
+          navegador) para poder corregirlo. Está configurado para no incluir tu
+          dirección IP, cookies ni lo que escribas en los formularios. Se
+          conserva 30 días.
+        </li>
       </ul>
       <p>
         Los eventos que publicamos se recopilan de agendas públicas que permiten
@@ -67,9 +74,10 @@ export default function PaginaPrivacidad() {
           enviarlo (art. 6.1.a RGPD). Puedes retirarlo cuando quieras.
         </li>
         <li>
-          Seguridad de la web, acceso al panel y estadísticas anónimas de
-          visitas: <strong>interés legítimo</strong> en mantener el servicio
-          protegido y saber cómo se usa para mejorarlo (art. 6.1.f RGPD).
+          Seguridad de la web, acceso al panel, informes de errores y
+          estadísticas anónimas de visitas: <strong>interés legítimo</strong> en
+          mantener el servicio protegido y saber cómo se usa para mejorarlo
+          (art. 6.1.f RGPD).
         </li>
       </ul>
 
@@ -96,6 +104,10 @@ export default function PaginaPrivacidad() {
         <li>
           <strong>Neon</strong> (base de datos), con los datos guardados en
           servidores de Fráncfort (Unión Europea).
+        </li>
+        <li>
+          <strong>Functional Software Inc. (Sentry)</strong> (informes de
+          errores), con los datos guardados en servidores de la Unión Europea.
         </li>
         <li>
           <strong>GitHub</strong>, solo para el inicio de sesión del
