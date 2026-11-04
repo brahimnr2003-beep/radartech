@@ -149,7 +149,7 @@ A full-stack website **in production, with real data and maintained by AI**, bui
 |---|---|
 | **Full-stack with Next.js 16** | App Router, Server Components, Server Actions and Cache Components with strict TypeScript |
 | **Databases** | PostgreSQL on Neon, Drizzle ORM with versioned migrations, Docker locally |
-| **Applied AI** | Gemini with Zod-validated structured output to classify events; web search with Tavily; human review before publishing |
+| **Applied AI** | Gemini with Zod-validated structured output to classify events; web search with Tavily API; human review before publishing |
 | **Automation** | Daily GitHub Actions collector: source reading, deduplication, classification and search |
 | **Testing and CI** | Unit tests (Vitest), e2e tests (Playwright) and CI running lint, types, migrations, build and e2e on every push |
 | **Auth and security** | GitHub OAuth (Better Auth) restricted to the admin, server-side validation and account-free spam protection |
