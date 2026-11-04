@@ -153,6 +153,23 @@ Criterios generales: **coste cero** (planes gratuitos sin tarjeta), herramientas
   - Activar la facturación de Google — exige tarjeta y cobra por búsqueda y por llamada.
   - Búsqueda básica de Tavily — devolvía la mitad de resultados útiles.
 
+### [Dominio] — radartech.es en IONOS, con www como dirección principal
+
+- **Decisión:** dominio `radartech.es` registrado en IONOS y conectado a Vercel por DNS (registro A en la raíz y CNAME en `www`). La dirección principal es `www.radartech.es`; `radartech.es` y la antigua `radartech-lyart.vercel.app` redirigen a ella con un 308. La web, el login del panel y la OAuth App de GitHub usan la dirección nueva.
+- **Fecha:** 2026-11-04
+- **Motivo:** la dirección de Vercel era poco profesional. `.es` es el dominio natural para una web de eventos en España (el `.com` estaba ocupado). Es el único gasto del proyecto: el certificado HTTPS lo pone Vercel gratis. Hay que vigilar el precio de renovación, que sube tras el primer año.
+- **Alternativas descartadas:**
+  - `radartech.dev` — menos claro para el público español.
+  - DNS gestionados por Vercel — habría que cambiar los servidores de nombres y rehacer los registros del correo de IONOS.
+
+### [SEO] — Google Search Console
+
+- **Decisión:** propiedad de tipo Dominio (`radartech.es`, cubre `www`) verificada con un registro TXT en IONOS, con el sitemap enviado.
+- **Fecha:** 2026-11-04
+- **Motivo:** que Google descubra antes las fichas de eventos y ver qué búsquedas traen visitas, sin cookies ni código en la web. Gratis.
+- **Alternativas descartadas:**
+  - Propiedad por prefijo de URL — habría que verificar `www` y la raíz por separado.
+
 ### [Analítica] — Vercel Web Analytics, sin cookies
 
 - **Decisión:** estadísticas de visitas con Vercel Web Analytics (`@vercel/analytics`), en el layout raíz. No se cuentan las visitas al panel `/admin`. Se informa en la política de privacidad (interés legítimo) y en la de cookies.

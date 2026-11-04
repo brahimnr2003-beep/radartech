@@ -8,11 +8,11 @@ Plan de desarrollo de RadarTech, desde la preparación del proyecto hasta la ver
  ✔ 2  Portada con el mapa
  ✔ 3  Página de comunidad y ficha de evento
  ✔ 4  Base de datos
- ▼ 8  Recopilación automática con IA   (adelantada)
- ▼ 7  Publicación  ◄── primera versión pública, con eventos reales
- ▼ 5  Formulario «Añadir evento»
- ▼ 6  Panel de administración
- ▼ 9  Remate final
+ ✔ 8  Recopilación automática con IA   (adelantada)
+ ✔ 7  Publicación  ◄── primera versión pública, con eventos reales
+ ✔ 5  Formulario «Añadir evento»
+ ✔ 6  Panel de administración
+ ✔ 9  Remate final  ◄── versión final en www.radartech.es
  │
  ○ 10 Futuro
 ```
@@ -30,7 +30,7 @@ Las herramientas se incorporan en la fase que las necesita, no antes. El detalle
 - Proyecto Next.js 16 con TypeScript y Tailwind CSS.
 - ESLint, Prettier e integración continua en GitHub Actions (lint, formato, tipos y build en cada push y PR).
 
-## 1. Aspecto visual
+## 1. Aspecto visual — hecho
 
 - Tokens de diseño del boceto (colores, radios) en el tema de Tailwind.
 - Tipografías Space Grotesk, Inter y JetBrains Mono con `next/font`.
@@ -38,7 +38,7 @@ Las herramientas se incorporan en la fase que las necesita, no antes. El detalle
 
 **Resultado:** la web con la identidad visual de RadarTech.
 
-## 2. Portada con el mapa
+## 2. Portada con el mapa — hecho
 
 - Hero con llamada a la acción.
 - Mapa vectorial interactivo de las 17 comunidades autónomas más Ceuta y Melilla: resaltado al pasar el cursor, tooltip, navegación con clic y teclado.
@@ -46,7 +46,7 @@ Las herramientas se incorporan en la fase que las necesita, no antes. El detalle
 
 **Resultado:** portada completa, fiel al boceto.
 
-## 3. Página de comunidad y ficha de evento
+## 3. Página de comunidad y ficha de evento — hecho
 
 - Ruta `/eventos/[comunidad]` con eventos destacados primero, tarjetas y filtros.
 - Página `/eventos` con todos los eventos de España y filtro adicional de comunidad; las categorías de la portada enlazan a ella ya filtrada.
@@ -56,7 +56,7 @@ Las herramientas se incorporan en la fase que las necesita, no antes. El detalle
 
 **Resultado:** navegación completa portada → comunidad → evento.
 
-## 4. Base de datos
+## 4. Base de datos — hecho
 
 - PostgreSQL en **Docker** para desarrollo local.
 - Esquema y migraciones con **Drizzle**.
@@ -65,47 +65,50 @@ Las herramientas se incorporan en la fase que las necesita, no antes. El detalle
 
 **Resultado:** los datos dejan de estar en el código.
 
-## 5. Formulario «Añadir evento»
+## 5. Formulario «Añadir evento» — hecho
 
 - Formulario público con validación (Zod) en cliente y servidor.
 - Los eventos enviados se guardan como **pendientes de revisión**.
-- Protección anti-spam (pendiente de decidir).
+- Protección anti-spam sin cuentas: campo trampa, tiempo mínimo de envío y límites por hora y por email.
+- Email de contacto del organizador (no se publica) y URL del cartel.
 
 **Resultado:** los organizadores pueden proponer eventos.
 
-## 6. Panel de administración
+## 6. Panel de administración — hecho
 
 - Acceso privado con **Better Auth** e inicio de sesión con GitHub.
-- Cola de pendientes con relevancia, categoría y fuente.
-- Acciones Aprobar / Editar / Rechazar.
-- Aviso por email al administrador (pendiente de decidir).
+- Pestañas Pendientes / Publicados / Descartados, con el motivo de la IA, categoría y fuente.
+- Acciones Aprobar / Editar / Rechazar, destacar y aprobación en bloque.
 
 **Resultado:** nada se publica sin aprobación del administrador.
 
-## 7. Publicación — primera versión pública
+## 7. Publicación — hecho
 
 - Web en **Vercel** y base de datos en **Neon**.
-- Monitorización de errores con **Sentry**.
+- Estadísticas de visitas sin cookies con **Vercel Web Analytics**.
 
 **Resultado:** RadarTech accesible en internet, solo con eventos reales.
 
-## 8. Recopilación automática con IA
+## 8. Recopilación automática con IA — hecho
 
 - Fuentes aprobadas: eventos.wiki, agenda-tech y confs.tech (ver [07_recopilacion_eventos.md](07_recopilacion_eventos.md)); eliminación de duplicados entre fuentes.
 - Extracción y clasificación con **Gemini** vía Vercel AI SDK, con salida estructurada validada por Zod.
 - Ejecución periódica en **GitHub Actions**.
-- Siguiente mejora: que la IA busque eventos en internet para cubrir comunidades sin fuentes; esos entran como pendientes.
+- Búsqueda de eventos en internet con **Tavily** para las comunidades con menos eventos; solo se aceptan eventos con web oficial y entran como pendientes.
+- Importación de eventos investigados a mano desde JSON.
 - Métricas desde el primer día: nº de fuentes, eventos procesados y publicados al mes, porcentaje aprobado sin editar y tiempo/coste por evento.
 
 **Resultado:** eventos nuevos llegan solos a la cola de revisión.
 
-## 9. Remate final
+## 9. Remate final — hecho
 
 - Tests de extremo a extremo con **Playwright**.
 - Revisión de la versión móvil y de la accesibilidad, con los filtros en un panel desplegable en móvil.
 - SEO: metadatos, sitemap y datos estructurados de eventos.
-- Páginas legales: privacidad, cookies y términos.
-- README final con captura y autoría.
+- Monitorización de errores con **Sentry** (con source maps).
+- Páginas legales (privacidad, cookies y términos) y del pie (Sobre nosotros, Contacto, Promociona tu evento).
+- Dominio propio `radartech.es` y alta en Google Search Console.
+- README final con capturas y autoría.
 
 **Resultado:** versión final del proyecto.
 
@@ -114,6 +117,7 @@ Las herramientas se incorporan en la fase que las necesita, no antes. El detalle
 Fuera del alcance actual:
 
 - Nivel 3: páginas por provincia.
+- Aviso por email al administrador cuando haya eventos pendientes.
 - Eventos destacados de pago (Stripe).
 - Publicidad no intrusiva.
 - Perfiles profesionales.
