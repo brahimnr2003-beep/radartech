@@ -11,7 +11,7 @@ concurrency:
 
 jobs:
   calidad:
-    name: Lint, formato, tipos, tests, migraciones y build
+    name: Lint, formato, tipos, tests, migraciones, build y e2e
     runs-on: ubuntu-24.04
 
     # Base de datos temporal: se crea para cada ejecución y se descarta al acabar
@@ -51,3 +51,13 @@ jobs:
       - run: npm run db:migrate
       - run: npm run db:seed
       - run: npm run build
+
+      # Pruebas de extremo a extremo con Chromium sobre la web compilada
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:e2e
+      - uses: actions/upload-artifact@v7
+        if: failure()
+        with:
+          name: informe-playwright
+          path: playwright-report/
+          retention-days: 7

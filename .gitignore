@@ -35,6 +35,9 @@ build/
 .turbo/
 .cache/
 coverage/
+# Playwright
+test-results/
+playwright-report/
 *.tsbuildinfo
 
 # ===== Python =====
