@@ -21,7 +21,9 @@ export type Enfoque = keyof typeof ENFOQUES;
  * Webs que reúnen eventos de otros: sirven para descubrirlos, pero nunca son
  * su fuente primaria. Por decisión del administrador, tampoco cuentan las
  * plataformas de inscripción (Eventbrite, Meetup, Luma, Devpost): solo la web
- * propia del evento o de su organizador.
+ * propia del evento o de su organizador. Excepción: la página de un grupo en
+ * gdg.community.dev sí es oficial (es la web que usan los Google Developer
+ * Groups para sus eventos, como los DevFest).
  */
 const AGREGADORES = [
   "eventbrite.es",
@@ -144,7 +146,7 @@ const esquemaEncontrado = esquemaClasificacion.extend({
     .url()
     .nullable()
     .describe(
-      "Web propia del evento o de su organizador. NUNCA una agenda, calendario, listado, noticia, red social ni plataforma de entradas (Eventbrite, Meetup, Luma, Devpost). null si no aparece en el texto.",
+      "Web propia del evento o de su organizador. NUNCA una agenda, calendario, listado, noticia, red social ni plataforma de entradas (Eventbrite, Meetup, Luma, Devpost). Las páginas de eventos de Google Developer Groups en gdg.community.dev SÍ cuentan como web oficial. null si no aparece en el texto.",
     ),
   urlEncontrado: z
     .url()

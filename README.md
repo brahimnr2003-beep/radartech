@@ -38,7 +38,8 @@ Web full-stack **en producción, con datos reales y mantenida por IA**, hecha de
 |---|---|
 | **Full-stack con Next.js 16** | App Router, Server Components, Server Actions y Cache Components con TypeScript estricto |
 | **Bases de datos** | PostgreSQL en Neon, Drizzle ORM con migraciones versionadas, Docker en local |
-| **IA aplicada** | Gemini con salida estructurada validada con Zod para clasificar eventos; búsqueda web con Tavily; revisión humana antes de publicar |
+| **IA aplicada** | Gemini con salida estructurada validada con Zod para clasificar eventos; búsqueda web con la API de Tavily; revisión humana antes de publicar |
+| **Integración de APIs** | APIs REST de terceros: Gemini (vía Vercel AI SDK), Tavily Search, GitHub (OAuth y REST), eventos.wiki y Sentry. Lectura de sitemaps y datos estructurados JSON-LD. Peticiones con timeouts, pausas entre llamadas, User-Agent identificado, validación con Zod de las respuestas de la IA y claves en variables de entorno |
 | **Automatización** | Recolector diario en GitHub Actions: lectura de fuentes, deduplicado, clasificación y búsqueda |
 | **Testing y CI** | Tests unitarios (Vitest), pruebas e2e (Playwright) y CI con lint, tipos, migraciones, build y e2e en cada push |
 | **Autenticación y seguridad** | OAuth con GitHub (Better Auth) restringido al administrador, validación en el servidor y anti-spam sin cuentas |
@@ -150,6 +151,7 @@ A full-stack website **in production, with real data and maintained by AI**, bui
 | **Full-stack with Next.js 16** | App Router, Server Components, Server Actions and Cache Components with strict TypeScript |
 | **Databases** | PostgreSQL on Neon, Drizzle ORM with versioned migrations, Docker locally |
 | **Applied AI** | Gemini with Zod-validated structured output to classify events; web search with Tavily API; human review before publishing |
+| **API integration** | Third-party REST APIs: Gemini (via Vercel AI SDK), Tavily Search, GitHub (OAuth and REST), eventos.wiki and Sentry. Sitemap and JSON-LD structured data parsing. Requests with timeouts, throttling, an identifying User-Agent, Zod-validated AI output and keys kept in environment variables |
 | **Automation** | Daily GitHub Actions collector: source reading, deduplication, classification and search |
 | **Testing and CI** | Unit tests (Vitest), e2e tests (Playwright) and CI running lint, types, migrations, build and e2e on every push |
 | **Auth and security** | GitHub OAuth (Better Auth) restricted to the admin, server-side validation and account-free spam protection |
